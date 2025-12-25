@@ -34,8 +34,8 @@ const habitSchema = new mongoose.Schema({
   reminderTime: String,
   category: {
     type: String,
-    enum: ['health', 'mindfulness', 'productivity', 'self_care'],
-    default: 'health'
+    enum: ['Health', 'Mindfulness', 'Productivity', 'Self_Care'],
+    default: 'Health'
   }
 }, {
   timestamps: true

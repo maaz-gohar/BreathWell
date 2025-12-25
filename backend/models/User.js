@@ -22,18 +22,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  preferences: {
-    theme: { type: String, default: 'light' },
-    notifications: { type: Boolean, default: true },
-    emergencyContact: {
-      name: String,
-      phone: String
-    }
-  },
-  biometricEnabled: {
-    type: Boolean,
-    default: false
-  }
+  // preferences: {
+  //   theme: { type: String, default: 'light' },
+  //   notifications: { type: Boolean, default: true },
+  //   emergencyContact: {
+  //     name: String,
+  //     phone: String
+  //   }
+  // },
+  // biometricEnabled: {
+  //   type: Boolean,
+  //   default: false
+  // }
 }, {
   timestamps: true
 });

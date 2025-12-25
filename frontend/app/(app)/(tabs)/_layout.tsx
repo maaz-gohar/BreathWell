@@ -1,85 +1,64 @@
-import React from 'react';
-import { Tabs } from 'expo-router';
-import { useTheme } from 'react-native-paper';
-import { useAuth } from '../../context/AuthContext';
-import { Redirect } from 'expo-router';
-import { View, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Tabs } from 'expo-router';
+import { COLORS } from '../../../constants/Colors';
 
 export default function TabLayout() {
-  const theme = useTheme();
-  const { user, loading } = useAuth();
-
-  // Redirect to login if not authenticated
-  if (!loading && !user) {
-    return <Redirect href="/" />;
-  }
-
-  // Show loading state
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
-      </View>
-    );
-  }
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
         tabBarStyle: {
-          backgroundColor: theme.colors.surface,
-          borderTopColor: theme.colors.outline,
+          backgroundColor: '#fff',
+          borderTopWidth: 1,
+          borderTopColor: '#e5e7eb',
+          height: 60,
+          paddingBottom: 10,
         },
-        headerStyle: {
-          backgroundColor: theme.colors.primary,
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
+        tabBarActiveTintColor: COLORS.primary,
+        tabBarInactiveTintColor: COLORS.textLight,
+        headerShown: false,
+        // headerStyle: {
+        //   backgroundColor: COLORS.primary,
+        // },
+        // headerTintColor: '#fff',
+        // headerTitleStyle: {
+        //   fontWeight: 'bold',
+        // },
       }}
     >
       <Tabs.Screen
-        name="dashboard"
+        name="index"
         options={{
-          title: 'Dashboard',
+          title: 'Home',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
-          headerTitle: 'Mindful Companion',
         }}
       />
       <Tabs.Screen
-        name="mood-tracker"
+        name="mood"
         options={{
           title: 'Mood',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="happy" size={size} color={color} />
           ),
-          headerTitle: 'Mood Tracker',
         }}
       />
       <Tabs.Screen
-        name="chat"
+        name="ai-therapist"
         options={{
-          title: 'Therapist',
+          title: 'AI Therapist',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="chatbubble" size={size} color={color} />
+            <Ionicons name="chatbubbles" size={size} color={color} />
           ),
-          headerTitle: 'AI Therapist',
         }}
       />
       <Tabs.Screen
-        name="breathing"
+        name="breath"
         options={{
-          title: 'Breathing',
+          title: 'Breathe',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="leaf" size={size} color={color} />
           ),
-          headerTitle: 'Breathing Exercises',
         }}
       />
       <Tabs.Screen
@@ -89,7 +68,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="checkmark-circle" size={size} color={color} />
           ),
-          headerTitle: 'Habit Tracker',
         }}
       />
       <Tabs.Screen
@@ -99,7 +77,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="stats-chart" size={size} color={color} />
           ),
-          headerTitle: 'Mood Analytics',
         }}
       />
       <Tabs.Screen
@@ -107,9 +84,8 @@ export default function TabLayout() {
         options={{
           title: 'Journal',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="mic" size={size} color={color} />
+            <Ionicons name="journal" size={size} color={color} />
           ),
-          headerTitle: 'Voice Journal',
         }}
       />
       <Tabs.Screen
@@ -119,7 +95,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),
-          headerTitle: 'Profile',
         }}
       />
     </Tabs>
