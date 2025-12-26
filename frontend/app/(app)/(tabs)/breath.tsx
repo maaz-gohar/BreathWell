@@ -546,7 +546,7 @@ export default function BreathScreen() {
                     <Ionicons 
                       name={option.icon} 
                       size={24} 
-                      color={selectedSound === option.key ? '#FFFFFF' : COLORS.text} 
+                      color={selectedSound === option.key ? COLORS.primary : COLORS.text} 
                     />
                   </View>
                   <Text style={[

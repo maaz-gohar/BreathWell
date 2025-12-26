@@ -18,7 +18,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { journalService } from '../../../services/journal.service';
 
 // Your backend base URL
-const API_BASE_URL = 'http://192.168.1.9:8000';
+const API_BASE_URL = 'https://x80w9dj3-8000.euw.devtunnels.ms';
 
 interface JournalEntry {
   _id: string;
