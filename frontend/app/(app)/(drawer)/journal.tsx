@@ -11,6 +11,7 @@ import {
   View
 } from 'react-native';
 import VoiceRecorder from '../../../components/journal/VoiceRecorder';
+import AppScreenHeader from '../../../components/ui/AppScreenHeader';
 import Card from '../../../components/ui/Card';
 import Loading from '../../../components/ui/Loading';
 import { COLORS } from '../../../constants/Colors';
@@ -352,10 +353,7 @@ export default function JournalScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Voice Journal</Text>
-        <Text style={styles.subtitle}>Express yourself freely</Text>
-      </View>
+      <AppScreenHeader title="Voice Journal" subtitle="Express yourself freely" />
 
       <Card style={styles.recorderCard}>
         <View style={styles.recorderHeader}>

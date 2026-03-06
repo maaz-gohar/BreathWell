@@ -8,10 +8,12 @@ import {
   View,
 } from 'react-native';
 import MoodPicker from '../../../components/mood/MoodPicker';
+import AppScreenHeader from '../../../components/ui/AppScreenHeader';
 import Button from '../../../components/ui/Button';
 import Card from '../../../components/ui/Card';
 import Input from '../../../components/ui/Input';
 import { COLORS } from '../../../constants/Colors';
+import { RADIUS, SPACING, TYPOGRAPHY } from '../../../constants/theme';
 import { useAuth } from '../../../context/AuthContext';
 import { moodService } from '../../../services/mood.service';
 import { Formatters } from '../../../utils/formatters';
@@ -133,10 +135,7 @@ export default function MoodScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Mood Tracker</Text>
-        <Text style={styles.subtitle}>How are you feeling today?</Text>
-      </View>
+      <AppScreenHeader title="Mood Tracker" subtitle="How are you feeling today?" />
 
       {/* Today's Mood */}
       <Card style={styles.section}>
@@ -290,32 +289,30 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   header: {
-    padding: 20,
+    padding: SPACING.xl,
+    paddingTop: SPACING.xxxl + 8,
     backgroundColor: COLORS.primary,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: RADIUS.xl,
+    borderBottomRightRadius: RADIUS.xl,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    ...TYPOGRAPHY.heading1,
     color: '#FFFFFF',
-    marginBottom: 8,
-    paddingTop: 30
+    marginBottom: SPACING.sm,
   },
   subtitle: {
-    fontSize: 16,
+    ...TYPOGRAPHY.body,
     color: '#FFFFFF',
     opacity: 0.9,
   },
   section: {
-    margin: 16,
-    marginTop: 20,
+    margin: SPACING.lg,
+    marginTop: SPACING.xl,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...TYPOGRAPHY.heading3,
     color: COLORS.text,
-    marginBottom: 16,
+    marginBottom: SPACING.lg,
   },
   todayMoodContainer: {
     flexDirection: 'row',

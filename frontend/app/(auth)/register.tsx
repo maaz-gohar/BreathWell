@@ -13,6 +13,7 @@ import {
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { COLORS } from '../../constants/Colors';
+import { RADIUS, SPACING, TYPOGRAPHY } from '../../constants/theme';
 import { useAuth } from '../../context/AuthContext';
 
 export default function RegisterScreen() {
@@ -54,7 +55,7 @@ export default function RegisterScreen() {
     setLoading(true);
     try {
       await register({ name, email, password });
-      router.replace('/(app)/(tabs)');
+      router.replace('/(app)/(drawer)');
     } catch (error: any) {
       Alert.alert(
         'Registration Failed',

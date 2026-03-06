@@ -10,11 +10,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import AppScreenHeader from '../../../components/ui/AppScreenHeader';
 import Card from '../../../components/ui/Card';
 import Input from '../../../components/ui/Input';
 import Loading from '../../../components/ui/Loading';
 import { API_CONFIG } from '../../../constants/API';
 import { COLORS } from '../../../constants/Colors';
+import { RADIUS, SPACING, TYPOGRAPHY } from '../../../constants/theme';
 import { useAuth } from '../../../context/AuthContext';
 import { authService } from '../../../services/auth.service';
 import { Formatters } from '../../../utils/formatters';
@@ -155,7 +157,8 @@ export default function ProfileScreen() {
   
   return (
     <ScrollView style={styles.container}>
-      {/* Profile Header */}
+      <AppScreenHeader title="Profile" subtitle={user?.email} />
+      {/* Profile content */}
       <View style={styles.header}>
         <View style={styles.avatarContainer}>
           <Image
@@ -337,11 +340,11 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    padding: 32,
-    paddingTop: 60,
+    padding: SPACING.xxxl,
+    paddingTop: SPACING.xxxl + 28,
     backgroundColor: COLORS.primary,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: RADIUS.xl + 4,
+    borderBottomRightRadius: RADIUS.xl + 4,
   },
   avatarContainer: {
     position: 'relative',

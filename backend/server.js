@@ -23,6 +23,7 @@ app.use('/api/chat', require('./routes/chat.route'));
 app.use('/api/habits', require('./routes/habit.route'));
 app.use('/api/wellness', require('./routes/wellness.route'));
 app.use('/api/journal', require('./routes/journal.route'));
+app.use('/api/islamic', require('./routes/islamic.route'));
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mental_wellness', {

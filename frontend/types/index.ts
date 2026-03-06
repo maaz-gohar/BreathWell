@@ -143,3 +143,74 @@ export interface StreakSummary {
   completedToday: number;
   totalHabits: number;
 }
+
+// Islamic Heal Well Module types
+export interface Verse {
+  surah: string;
+  verseRange: string;
+  arabicText?: string;
+  translation: string;
+  hadithRef?: string;
+}
+
+export interface SunnahPractice {
+  title: string;
+  description: string;
+  hadithSource?: string;
+}
+
+export interface RegulationLayer {
+  type: 'breathing' | 'dhikr' | 'dua' | 'journal';
+  instruction: string;
+  dhikrText?: string;
+  breathingConfig?: {
+    inhale: number;
+    exhale: number;
+    rounds: number;
+  };
+}
+
+export interface IslamicModule {
+  id: string;
+  moduleType: 'sleep' | 'relationship' | 'general';
+  emotionalState: string;
+  displayLabel: string;
+  emoji?: string;
+  emotionalValidation?: string;
+  verses: Verse[];
+  sunnahPractices: SunnahPractice[];
+  regulationLayer?: RegulationLayer;
+  reflectionPrompts: string[];
+  closingAffirmation?: string;
+  order?: number;
+}
+
+export interface SleepRitual {
+  title: string;
+  description: string;
+  order?: number;
+}
+
+export interface MorningAdhkar {
+  title: string;
+  source?: string;
+  items: string[];
+}
+
+export interface TahajjudContent {
+  title: string;
+  source?: string;
+  whenWaking?: string;
+  verses?: Array<{ surah: string; verseRange: string; translation: string }>;
+}
+
+export interface RuqyahVerse {
+  ref: string;
+  name: string;
+  hadithRef?: string;
+}
+
+export interface RuqyahContent {
+  title: string;
+  verses: RuqyahVerse[];
+}

@@ -13,17 +13,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Card from '../../../components/ui/Card';
-import Loading from '../../../components/ui/Loading';
-import { COLORS } from '../../../constants/Colors';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Card from '../../../../components/ui/Card';
+import Loading from '../../../../components/ui/Loading';
+import { COLORS } from '../../../../constants/Colors';
+import { RADIUS, SPACING } from '../../../../constants/theme';
 
-type BreathingTechnique = 'box' | '478' | 'relaxing' | 'triangle';
+type BreathingTechnique = 'box' | '478' | 'relaxing' | 'triangle' | 'dhikrAllahHu' | 'tasbeehSlow' | 'yaSalaam' | 'yaHaleem';
 type BackgroundSound = 'ocean' | 'rain' | 'forest' | 'white-noise' | 'none';
 
 interface TechniqueConfig {
   name: string;
   description: string;
-  phases: { duration: number; label: string; instruction: string }[];
+  phases: { duration: number; label: string; instruction: string; dhikrText?: string }[];
   cycles: number;
   color: string;
 }
@@ -62,25 +64,25 @@ export default function BreathScreen() {
       key: 'ocean',
       label: 'Ocean Waves',
       icon: 'water',
-      file: require('../../../assets/sounds/ocean-waves.mp3'),
+      file: require('../../../../assets/sounds/ocean-waves.mp3'),
     },
     {
       key: 'rain',
       label: 'Natural Rain',
       icon: 'rainy',
-      file: require('../../../assets/sounds/natural-rain.mp3'),
+      file: require('../../../../assets/sounds/natural-rain.mp3'),
     },
     {
       key: 'forest',
       label: 'Forest Birds',
       icon: 'leaf',
-      file: require('../../../assets/sounds/birds-in-the-forest-birds-in-spring.mp3'),
+      file: require('../../../../assets/sounds/birds-in-the-forest-birds-in-spring.mp3'),
     },
     {
       key: 'white-noise',
       label: 'White Noise',
       icon: 'volume-high',
-      file: require('../../../assets/sounds/white-noise-soft.mp3'),
+      file: require('../../../../assets/sounds/white-noise-soft.mp3'),
     },
     {
       key: 'none',
@@ -134,6 +136,46 @@ export default function BreathScreen() {
       ],
       cycles: 8,
       color: '#FF9800',
+    },
+    dhikrAllahHu: {
+      name: '4/6 Dhikr (Allah-Hu)',
+      description: 'Inhale saying "Allah", exhale saying "Hu". Combines breathing regulation with remembrance.',
+      phases: [
+        { duration: 4, label: 'INHALE', instruction: 'Inhale slowly, say "Allah" in your heart', dhikrText: 'Allah' },
+        { duration: 6, label: 'EXHALE', instruction: 'Exhale slowly, say "Hu" in your heart', dhikrText: 'Hu' },
+      ],
+      cycles: 10,
+      color: '#7C3AED',
+    },
+    tasbeehSlow: {
+      name: 'Tasbeeh Slow (SubhanAllah)',
+      description: 'Exhale with "SubhanAllah" on each breath. 33 rounds naturally slows heart rate.',
+      phases: [
+        { duration: 4, label: 'INHALE', instruction: 'Inhale deeply and slowly' },
+        { duration: 6, label: 'EXHALE', instruction: 'Exhale slowly, say "SubhanAllah"', dhikrText: 'SubhanAllah' },
+      ],
+      cycles: 33,
+      color: '#059669',
+    },
+    yaSalaam: {
+      name: 'Ya Salaam (Anxiety Relief)',
+      description: 'Repeat "Ya Salaam" (The Source of Peace) with 4s inhale, 6s exhale. For anxiety and restlessness.',
+      phases: [
+        { duration: 4, label: 'INHALE', instruction: 'Inhale slowly' },
+        { duration: 6, label: 'EXHALE', instruction: 'Exhale slowly, say "Ya Salaam"', dhikrText: 'Ya Salaam' },
+      ],
+      cycles: 10,
+      color: '#1E3A5F',
+    },
+    yaHaleem: {
+      name: 'Ya Haleem (Anger Regulation)',
+      description: 'Repeat "Ya Haleem" (The Most Forbearing) with 4s inhale, 6s exhale. For calming anger.',
+      phases: [
+        { duration: 4, label: 'INHALE', instruction: 'Inhale slowly' },
+        { duration: 6, label: 'EXHALE', instruction: 'Exhale slowly, say "Ya Haleem"', dhikrText: 'Ya Haleem' },
+      ],
+      cycles: 10,
+      color: '#7C3AED',
     },
   };
 
@@ -441,14 +483,15 @@ export default function BreathScreen() {
   };
 
   const currentPhaseData = currentTechnique.phases[currentPhase];
+  const insets = useSafeAreaInsets();
 
   if (isLoading) {
     return <Loading fullScreen text="Preparing your session..." />;
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
-      <View style={styles.header}>
+    <ScrollView style={styles.container} contentContainerStyle={[styles.scrollContent, { paddingBottom: (insets?.bottom ?? 0) + 80 }]}>
+      <View style={[styles.header, { paddingTop: (insets?.top ?? 0) + SPACING.xxl }]}>
         <Text style={styles.title}>Breathing Exercises</Text>
         <Text style={styles.subtitle}>Find calm and focus through mindful breathing</Text>
       </View>
@@ -732,22 +775,21 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   header: {
-    padding: 20,
+    padding: SPACING.xl,
     backgroundColor: COLORS.primary,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: RADIUS.xl,
+    borderBottomRightRadius: RADIUS.xl,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#FFFFFF',
-    marginBottom: 8,
-    marginTop: 30
+    marginBottom: SPACING.sm,
   },
   subtitle: {
     fontSize: 16,
     color: '#FFFFFF',
-    opacity: 0.9
+    opacity: 0.9,
   },
   selectionCard: {
     margin: 16,

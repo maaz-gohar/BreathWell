@@ -1,4 +1,4 @@
-import { Entypo, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
@@ -10,32 +10,34 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Card from '../../../components/ui/Card';
-import { API_CONFIG } from '../../../constants/API';
-import { COLORS } from '../../../constants/Colors';
-import { useAuth } from '../../../context/AuthContext';
-import { moodService } from '../../../services/mood.service';
-import { wellnessService } from '../../../services/wellness.service';
-import type { WellnessPlan } from '../../../types';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Card from '../../../../components/ui/Card';
+import { API_CONFIG } from '../../../../constants/API';
+import { COLORS } from '../../../../constants/Colors';
+import { RADIUS, SPACING, TYPOGRAPHY } from '../../../../constants/theme';
+import { useOpenDrawer } from '../../../../hooks/useOpenDrawer';
+import { useAuth } from '../../../../context/AuthContext';
+import { moodService } from '../../../../services/mood.service';
+import { wellnessService } from '../../../../services/wellness.service';
+import type { WellnessPlan } from '../../../../types';
 
-// Helper function for avatar URL
 const getFullAvatarUrl = (avatarPath: string | undefined): string => {
   if (!avatarPath || avatarPath.trim() === '') {
     return 'https://via.placeholder.com/50';
   }
-  
   if (avatarPath.startsWith('http')) {
     return avatarPath;
   }
-  
   const baseUrl = API_CONFIG.BASE_URL.replace('/api', '');
   const cleanPath = avatarPath.startsWith('/') ? avatarPath : `/${avatarPath}`;
   return `${baseUrl}${cleanPath}`;
 };
 
 export default function HomeScreen() {
+  const insets = useSafeAreaInsets();
   const { user } = useAuth();
   const router = useRouter();
+  const openDrawer = useOpenDrawer();
   const [wellnessPlan, setWellnessPlan] = useState<WellnessPlan | null>(null);
   const [todayMood, setTodayMood] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -71,14 +73,20 @@ export default function HomeScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Header */}
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: insets.bottom + 80 }}>
       <LinearGradient
         colors={[COLORS.primary, COLORS.primaryLight]}
-        style={styles.header}
+        style={[styles.header, { paddingTop: insets.top + SPACING.xxl }]}
       >
         <View style={styles.headerContent}>
-          <View>
+          <TouchableOpacity
+            onPress={openDrawer}
+            style={styles.menuButton}
+            hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+          >
+            <Ionicons name="menu" size={28} color="#fff" />
+          </TouchableOpacity>
+          <View style={styles.headerTextWrap}>
             <Text style={styles.greeting}>Assalamu Alaikum,</Text>
             <Text style={styles.userName}>{user?.name || 'User'}</Text>
           </View>
@@ -91,7 +99,6 @@ export default function HomeScreen() {
         </View>
       </LinearGradient>
 
-      {/* Today's Mood */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Today's Mood</Text>
         {todayMood ? (
@@ -114,7 +121,7 @@ export default function HomeScreen() {
             </View>
           </Card>
         ) : (
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.addMoodButton}
             onPress={() => router.push('/mood')}
           >
@@ -124,7 +131,6 @@ export default function HomeScreen() {
         )}
       </View>
 
-      {/* Daily Wellness Plan */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Today's Wellness Plan</Text>
         {wellnessPlan?.dailyTasks?.slice(0, 3).map((task, index) => (
@@ -151,13 +157,12 @@ export default function HomeScreen() {
         )}
       </View>
 
-      {/* Quick Actions */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.actionCard}
-            onPress={() => router.push('/breath')}
+            onPress={() => router.push('/(drawer)/(tabs)/breath')}
           >
             <LinearGradient
               colors={[COLORS.secondary, '#34D399']}
@@ -168,7 +173,7 @@ export default function HomeScreen() {
             <Text style={styles.actionText}>Breathing</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.actionCard}
             onPress={() => router.push('/journal')}
           >
@@ -181,9 +186,9 @@ export default function HomeScreen() {
             <Text style={styles.actionText}>Journal</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.actionCard}
-            onPress={() => router.push('/ai-therapist')}
+            onPress={() => router.push('/(drawer)/(tabs)/ai-therapist')}
           >
             <LinearGradient
               colors={[COLORS.primary, '#818CF8']}
@@ -194,22 +199,21 @@ export default function HomeScreen() {
             <Text style={styles.actionText}>AI Therapist</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.actionCard}
-            onPress={() => router.push('/ai-therapist')}
+            onPress={() => router.push('/heal-well')}
           >
             <LinearGradient
-              colors={['#8B5CF6', '#A78BFA']}
+              colors={['#1E3A5F', '#2E5077']}
               style={styles.actionIcon}
             >
-              <FontAwesome5 name="brain" size={24} color="#fff" />
+              <Ionicons name="moon" size={24} color="#fff" />
             </LinearGradient>
-            <Text style={styles.actionText}>Your Ai Therapist</Text>
+            <Text style={styles.actionText}>Heal Well</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      {/* Motivation Quote */}
       {wellnessPlan?.motivationalQuote && (
         <Card style={styles.quoteCard}>
           <View style={styles.quoteContent}>
@@ -228,26 +232,31 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   header: {
-    padding: 20,
-    paddingTop: 60,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    padding: SPACING.xl,
+    borderBottomLeftRadius: RADIUS.xl + 4,
+    borderBottomRightRadius: RADIUS.xl + 4,
   },
   headerContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  menuButton: {
+    padding: SPACING.xs,
+    marginRight: SPACING.sm,
+  },
+  headerTextWrap: {
+    flex: 1,
+  },
   greeting: {
-    fontSize: 16,
+    ...TYPOGRAPHY.caption,
     color: '#fff',
     opacity: 0.9,
   },
   userName: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    ...TYPOGRAPHY.heading1,
     color: '#fff',
-    marginTop: 5,
+    marginTop: SPACING.xs,
   },
   avatar: {
     width: 50,
@@ -257,17 +266,14 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
   },
   section: {
-    padding: 20,
+    padding: SPACING.xl,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    ...TYPOGRAPHY.heading3,
     color: COLORS.text,
-    marginBottom: 15,
+    marginBottom: SPACING.lg,
   },
-  moodCard: {
-    marginBottom: 0,
-  },
+  moodCard: { marginBottom: 0 },
   moodCardContent: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -278,77 +284,67 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 15,
+    marginRight: SPACING.lg,
   },
-  moodInfo: {
-    flex: 1,
-  },
+  moodInfo: { flex: 1 },
   moodText: {
+    ...TYPOGRAPHY.bodyMedium,
     fontSize: 18,
-    fontWeight: '600',
     color: COLORS.text,
   },
   moodNote: {
-    fontSize: 14,
+    ...TYPOGRAPHY.caption,
     color: COLORS.textLight,
-    marginTop: 5,
+    marginTop: SPACING.xs,
   },
   addMoodButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 15,
-    padding: 20,
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.lg,
+    padding: SPACING.xl,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: COLORS.border,
     borderStyle: 'dashed',
   },
   addMoodText: {
-    fontSize: 16,
+    ...TYPOGRAPHY.bodyMedium,
     color: COLORS.primary,
-    marginLeft: 10,
-    fontWeight: '600',
+    marginLeft: SPACING.sm,
   },
   taskCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: SPACING.sm,
   },
-  taskCheckbox: {
-    marginRight: 15,
-  },
-  taskContent: {
-    flex: 1,
-  },
+  taskCheckbox: { marginRight: SPACING.lg },
+  taskContent: { flex: 1 },
   taskTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...TYPOGRAPHY.bodyMedium,
     color: COLORS.text,
-    marginBottom: 4,
+    marginBottom: SPACING.xs,
   },
   taskDescription: {
-    fontSize: 14,
+    ...TYPOGRAPHY.caption,
     color: COLORS.textLight,
-    marginBottom: 4,
+    marginBottom: SPACING.xs,
   },
   taskTime: {
-    fontSize: 12,
+    ...TYPOGRAPHY.label,
     color: COLORS.primary,
-    fontWeight: '500',
   },
   viewAllButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    marginTop: 10,
+    paddingVertical: SPACING.md,
+    marginTop: SPACING.sm,
   },
   viewAllText: {
-    fontSize: 14,
+    ...TYPOGRAPHY.captionMedium,
     color: COLORS.primary,
-    fontWeight: '600',
-    marginRight: 4,
+    marginRight: SPACING.xs,
   },
   actionsGrid: {
     flexDirection: 'row',
@@ -357,14 +353,14 @@ const styles = StyleSheet.create({
   },
   actionCard: {
     width: '48%',
-    backgroundColor: '#fff',
-    borderRadius: 15,
-    padding: 20,
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.lg,
+    padding: SPACING.xl,
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: SPACING.lg,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 3,
   },
@@ -374,26 +370,22 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: SPACING.sm,
   },
   actionText: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...TYPOGRAPHY.captionMedium,
     color: COLORS.text,
   },
-  quoteCard: {
-    margin: 20,
-    marginTop: 0,
-  },
+  quoteCard: { margin: SPACING.xl, marginTop: 0 },
   quoteContent: {
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
   quoteText: {
     flex: 1,
-    fontSize: 16,
+    ...TYPOGRAPHY.body,
     fontStyle: 'italic',
     color: COLORS.text,
-    marginLeft: 10,
+    marginLeft: SPACING.sm,
   },
 });

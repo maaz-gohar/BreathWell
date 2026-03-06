@@ -1,0 +1,320 @@
+{
+  "modules": [
+    {
+      "moduleType": "sleep",
+      "emotionalState": "anxiety",
+      "displayLabel": "Anxiety-Based Insomnia",
+      "emoji": "🫀",
+      "emotionalValidation": "It's okay to feel anxious. Allah has given us verses and practices to find peace. Your heart can find rest in His remembrance.",
+      "verses": [
+        {
+          "surah": "Ar-Ra'd",
+          "verseRange": "13:28",
+          "arabicText": "الَّذِينَ آمَنُوا وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ اللَّهِ ۗ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+          "translation": "Those who have believed and whose hearts are assured by the remembrance of Allah. Unquestionably, by the remembrance of Allah hearts are assured.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "Al-Anfal",
+          "verseRange": "8:11",
+          "arabicText": "",
+          "translation": "He sent down upon you slumber (nu'ass) as a security from Him.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "Az-Zumar",
+          "verseRange": "39:42",
+          "arabicText": "",
+          "translation": "Allah takes away the souls at the time of their death, and those that die not during their sleep. He returns them upon waking for an appointed term.",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [
+        {
+          "title": "Tasbeeh Fatimah",
+          "description": "Say SubhanAllah 33 times, Alhamdulillah 33 times, Allahu Akbar 34 times before sleep.",
+          "hadithSource": "Sahih al-Bukhari (5361), Sahih Muslim (2727)"
+        },
+        {
+          "title": "Wudu Before Sleep",
+          "description": "Perform ablution as you do for prayer before going to bed.",
+          "hadithSource": "Prophetic practice"
+        },
+        {
+          "title": "Recite Ayat-ul-Kursi",
+          "description": "Whoever recites it at night, Allah appoints a guardian for him and Shaytan will not approach him until morning.",
+          "hadithSource": "Sahih al-Bukhari (2311)"
+        }
+      ],
+      "regulationLayer": {
+        "type": "breathing",
+        "instruction": "Repeat 'Ya Salaam' slowly with 4-second inhale and 6-second exhale.",
+        "dhikrText": "Ya Salaam",
+        "breathingConfig": {
+          "inhale": 4,
+          "exhale": 6,
+          "rounds": 10
+        }
+      },
+      "reflectionPrompts": [
+        "What exactly is causing my anxiety tonight?",
+        "Can I surrender this to Allah and trust His plan?"
+      ],
+      "closingAffirmation": "Allah is As-Salaam, the Source of Peace. My heart finds rest in His remembrance.",
+      "order": 1
+    },
+    {
+      "moduleType": "sleep",
+      "emotionalState": "fear",
+      "displayLabel": "Fear / Nightmare-Based Disturbance",
+      "emoji": "😰",
+      "emotionalValidation": "Fear and bad dreams can be distressing. The Prophet (PBUH) taught us specific Ruqyah practices for protection. You are not alone.",
+      "verses": [
+        {
+          "surah": "Al-Fatiha",
+          "verseRange": "1:1-7",
+          "arabicText": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+          "translation": "In the name of Allah, the Entirely Merciful, the Especially Merciful. [Full Surah Al-Fatiha]",
+          "hadithRef": "Sahih al-Bukhari (5736) - Al-Fatiha used as Ruqyah"
+        },
+        {
+          "surah": "Al-Baqarah",
+          "verseRange": "2:255",
+          "arabicText": "آيَةُ الْكُرْسِيِّ",
+          "translation": "Ayatul Kursi - The Verse of the Throne. Reciting it provides a guardian from Allah until morning.",
+          "hadithRef": "Sahih al-Bukhari (2311)"
+        },
+        {
+          "surah": "Al-Ikhlas, Al-Falaq, An-Nas",
+          "verseRange": "112-114",
+          "arabicText": "",
+          "translation": "The Three Quls - Recite 3 times, blow into your cupped palms, and wipe over your body.",
+          "hadithRef": "Sunan Abi Dawud (5056), Sahih al-Bukhari (5017)"
+        }
+      ],
+      "sunnahPractices": [
+        {
+          "title": "Blow Into Hands and Wipe Body",
+          "description": "Recite the Three Quls (112-114) three times, blow into your cupped palms, and wipe them over your body starting from head and face.",
+          "hadithSource": "Sahih al-Bukhari (5017)"
+        },
+        {
+          "title": "If You Have a Bad Dream",
+          "description": "Spit lightly to your left three times and seek refuge in Allah from the evil of what you saw.",
+          "hadithSource": "Sahih Muslim (2261)"
+        }
+      ],
+      "regulationLayer": {
+        "type": "dua",
+        "instruction": "Recite Ruqyah verses (Al-Fatiha, Ayatul Kursi, Three Quls) for protection.",
+        "dhikrText": "",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "What did the dream make me feel?",
+        "I seek refuge in Allah from evil - both seen and unseen."
+      ],
+      "closingAffirmation": "Allah is my Guardian. No harm shall touch me without His permission.",
+      "order": 2
+    },
+    {
+      "moduleType": "sleep",
+      "emotionalState": "overthinking",
+      "displayLabel": "Overthinking",
+      "emoji": "💭",
+      "emotionalValidation": "When your mind won't stop, remember: Whoever relies on Allah, He is sufficient. Place your trust in Him.",
+      "verses": [
+        {
+          "surah": "At-Talaq",
+          "verseRange": "65:3",
+          "arabicText": "",
+          "translation": "And whoever relies upon Allah - then He is sufficient for him.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "Ali 'Imran",
+          "verseRange": "3:173",
+          "arabicText": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
+          "translation": "Hasbunallahu wa ni'mal wakeel - Sufficient for us is Allah, and He is the best disposer of affairs.",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [],
+      "regulationLayer": {
+        "type": "dhikr",
+        "instruction": "Repeat 'Hasbunallahu wa ni'mal wakeel' 33 times.",
+        "dhikrText": "Hasbunallahu wa ni'mal wakeel",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "What exactly am I trying to control that only Allah controls?",
+        "Can I release this thought and trust Allah's plan?"
+      ],
+      "closingAffirmation": "Allah is sufficient for me. He is the best disposer of my affairs.",
+      "order": 3
+    },
+    {
+      "moduleType": "sleep",
+      "emotionalState": "guilt",
+      "displayLabel": "Guilt-Based Distress",
+      "emoji": "🤍",
+      "emotionalValidation": "Do not despair of Allah's mercy. He is Al-Ghafoor, the All-Forgiving. His mercy encompasses all things.",
+      "verses": [
+        {
+          "surah": "Az-Zumar",
+          "verseRange": "39:53",
+          "arabicText": "",
+          "translation": "Say: O My servants who have transgressed against themselves! Do not despair of the mercy of Allah. Indeed, Allah forgives all sins.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "Al-Baqarah",
+          "verseRange": "2:286",
+          "arabicText": "",
+          "translation": "Allah does not burden a soul beyond that it can bear.",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [
+        {
+          "title": "Dua for Forgiveness",
+          "description": "Allahumma innaka 'afuwwun tuhibbul 'afwa fa'fu 'anni (O Allah, You are Pardoning and love to pardon, so pardon me).",
+          "hadithSource": "Sunan al-Tirmidhi (3513)"
+        }
+      ],
+      "regulationLayer": {
+        "type": "dua",
+        "instruction": "Recite the forgiveness dua before sleep.",
+        "dhikrText": "Allahumma innaka 'afuwwun tuhibbul 'afwa fa'fu 'anni",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "Have I sought forgiveness from Allah?",
+        "Allah's mercy is greater than my mistakes."
+      ],
+      "closingAffirmation": "I am forgiven. Allah is Ar-Rahman, the Most Merciful.",
+      "order": 4
+    },
+    {
+      "moduleType": "sleep",
+      "emotionalState": "spiritual_exhaustion",
+      "displayLabel": "Spiritual Exhaustion",
+      "emoji": "🕊",
+      "emotionalValidation": "Sleep is a mercy from Allah - a means of rest. Your soul needs this renewal. Allow yourself to receive it.",
+      "verses": [
+        {
+          "surah": "An-Naba",
+          "verseRange": "78:9",
+          "arabicText": "",
+          "translation": "And We made your sleep (subaat) as a thing for rest.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "Al-Furqan",
+          "verseRange": "25:47",
+          "arabicText": "",
+          "translation": "And it is He who has made the night for you as clothing.",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [
+        {
+          "title": "2 Rak'ah Light Prayer",
+          "description": "Offer 2 light rak'ah before bed, then make a short dua.",
+          "hadithSource": ""
+        },
+        {
+          "title": "Tasbeeh Fatimah",
+          "description": "SubhanAllah 33, Alhamdulillah 33, Allahu Akbar 34.",
+          "hadithSource": "Sahih al-Bukhari (5361)"
+        }
+      ],
+      "regulationLayer": {
+        "type": "dhikr",
+        "instruction": "Perform Tasbeeh Fatimah after your light prayer.",
+        "dhikrText": "SubhanAllah, Alhamdulillah, Allahu Akbar",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "Have I been gentle with myself today?",
+        "Rest is worship when it enables me to serve Allah better."
+      ],
+      "closingAffirmation": "Sleep is a gift from Allah. I accept it with gratitude.",
+      "order": 5
+    }
+  ],
+  "rituals": [
+    {
+      "title": "Ablution (Wudu)",
+      "description": "The Prophet (PBUH) instructed: Whenever you go to bed, perform ablution as you do for prayer.",
+      "order": 1
+    },
+    {
+      "title": "Dusting the Bed",
+      "description": "Shake or dust your bed three times before lying down to ensure it is clean and free of harmful insects.",
+      "order": 2
+    },
+    {
+      "title": "Personal Hygiene",
+      "description": "Brush your teeth with Miswak or toothbrush before bed - it was the Prophet's (PBUH) habit.",
+      "order": 3
+    },
+    {
+      "title": "Early Rest",
+      "description": "Sleep early after Isha prayer to ensure you can wake easily for Fajr or Tahajjud.",
+      "order": 4
+    },
+    {
+      "title": "Closing Doors and Lights",
+      "description": "Recite Bismillah while closing doors, covering food containers, and extinguishing lamps before retiring.",
+      "order": 5
+    },
+    {
+      "title": "Sleep Position",
+      "description": "Lie on your right side, placing your right hand under your right cheek. Avoid sleeping on your stomach.",
+      "order": 6
+    },
+    {
+      "title": "Sleep Dua",
+      "description": "Allahumma bismika amutu wa ahya (O Allah, in Your name I die and I live). Source: Sahih al-Bukhari (6324)",
+      "order": 7
+    }
+  ],
+  "morningAdhkar": {
+    "title": "Morning Adhkar - Upon Waking",
+    "source": "Sahih al-Bukhari (6324)",
+    "items": [
+      "Alhamdulillahilladhi ahyana ba'da ma amatana wa ilayhin-nushur (Praise be to Allah who gave us life after death, and to Him is the resurrection).",
+      "Recite Ayat-ul-Kursi again in the morning.",
+      "Recite the Three Quls again.",
+      "La ilaha illa Allah wahdahu la sharika lah... × 100. Source: Sahih al-Bukhari (6403)"
+    ]
+  },
+  "tahajjud": {
+    "title": "Tahajjud / Night-Waking Content",
+    "source": "Sahih al-Bukhari (1154)",
+    "whenWaking": "La ilaha illa Allah wahdahu la sharika lah... Then make dua - it will be accepted.",
+    "verses": [
+      {
+        "surah": "Al-Muzzammil",
+        "verseRange": "73:1-4",
+        "translation": "Stand the night in prayer, except a little."
+      },
+      {
+        "surah": "Al-Isra",
+        "verseRange": "17:79",
+        "translation": "And from the night - pray with it as additional for you; perhaps your Lord will raise you to a praised station."
+      }
+    ]
+  },
+  "ruqyah": {
+    "title": "Ruqyah Core Verses",
+    "verses": [
+      { "ref": "1:1-7", "name": "Al-Fatiha", "hadithRef": "Sahih al-Bukhari (5736)" },
+      { "ref": "2:255", "name": "Ayatul Kursi", "hadithRef": "Sahih al-Bukhari (2311)" },
+      { "ref": "2:285-286", "name": "Last Two Verses of Al-Baqarah", "hadithRef": "Sahih al-Bukhari (5009), Sahih Muslim (807)" },
+      { "ref": "112-114", "name": "The Three Quls (Al-Ikhlas, Al-Falaq, An-Nas)", "hadithRef": "Sunan Abi Dawud (5056)" },
+      { "ref": "17:82", "name": "Qur'an as Healing", "hadithRef": "" }
+    ]
+  }
+}

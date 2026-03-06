@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: 'https://x80w9dj3-8000.euw.devtunnels.ms/api', // Change to your local IP
+  BASE_URL: 'http://192.168.1.17:8000/api', // Change to your local IP
   TIMEOUT: 30000,
   ENDPOINTS: {
     AUTH: {
@@ -33,6 +33,14 @@ export const API_CONFIG = {
       PLAN: '/wellness/plan',
       GENERATE_PLAN: '/wellness/plan/generate',
       SOS: '/wellness/sos'
+    },
+    ISLAMIC: {
+      MODULES: '/islamic/modules',
+      MODULE_BY_ID: (id: string) => `/islamic/modules/${id}`,
+      SLEEP_RITUALS: '/islamic/sleep/rituals',
+      MORNING_ADHKAR: '/islamic/sleep/morning-adhkar',
+      TAHAJJUD: '/islamic/sleep/tahajjud',
+      RUQYAH: '/islamic/ruqyah'
     }
   }
 };

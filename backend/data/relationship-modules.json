@@ -1,0 +1,318 @@
+{
+  "modules": [
+    {
+      "moduleType": "relationship",
+      "emotionalState": "anger",
+      "displayLabel": "When I Am Angry",
+      "emoji": "🔥",
+      "emotionalValidation": "Anger is a natural emotion. The strong person is the one who controls themselves when angry. You have the strength to respond with patience.",
+      "verses": [
+        {
+          "surah": "Ali 'Imran",
+          "verseRange": "3:134",
+          "arabicText": "",
+          "translation": "Those who restrain anger and pardon people - and Allah loves the doers of good.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "Fussilat",
+          "verseRange": "41:34",
+          "arabicText": "",
+          "translation": "Repel [evil] by that [deed] which is better; and thereupon the one whom between you and him is enmity [will become] as though he was a devoted friend.",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [
+        {
+          "title": "The Strong Person",
+          "description": "The strong person is the one who controls himself when angry.",
+          "hadithSource": "Sahih al-Bukhari (6116)"
+        },
+        {
+          "title": "When Angry - Sit Down",
+          "description": "If standing, sit down. If sitting, lie down. Make wudu.",
+          "hadithSource": "Sunan Abi Dawud (4782)"
+        }
+      ],
+      "regulationLayer": {
+        "type": "breathing",
+        "instruction": "Slow breathing: Inhale 4 seconds, Exhale 6 seconds. Repeat 'Ya Haleem' (The Most Forbearing).",
+        "dhikrText": "Ya Haleem",
+        "breathingConfig": {
+          "inhale": 4,
+          "exhale": 6,
+          "rounds": 10
+        }
+      },
+      "reflectionPrompts": [
+        "What exactly hurt me?",
+        "Am I reacting to tone or to pain?"
+      ],
+      "closingAffirmation": "I choose patience. Allah loves those who restrain anger.",
+      "order": 1
+    },
+    {
+      "moduleType": "relationship",
+      "emotionalState": "unloved",
+      "displayLabel": "When I Feel Unloved",
+      "emoji": "💔",
+      "emotionalValidation": "Your feelings are valid. Allah created spouses for sakina (tranquility), mawaddah (affection), and rahmah (mercy). These blessings can be restored.",
+      "verses": [
+        {
+          "surah": "Ar-Rum",
+          "verseRange": "30:21",
+          "arabicText": "",
+          "translation": "And of His signs is that He created for you from yourselves mates that you may find tranquillity in them; and He placed between you affection and mercy.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "An-Nur",
+          "verseRange": "24:22",
+          "arabicText": "",
+          "translation": "Let them pardon and overlook. Would you not like that Allah should forgive you?",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [
+        {
+          "title": "The Best Among Men",
+          "description": "The best of you are the best to their wives.",
+          "hadithSource": "Sunan al-Tirmidhi (3895)"
+        }
+      ],
+      "regulationLayer": {
+        "type": "dhikr",
+        "instruction": "Repeat 'Ya Wadud' (The Most Loving) 33 times.",
+        "dhikrText": "Ya Wadud",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "Have I expressed my needs gently?",
+        "Am I expecting perfection?"
+      ],
+      "closingAffirmation": "Allah is Al-Wadud. I am loved by Him, and I can extend that love.",
+      "order": 2
+    },
+    {
+      "moduleType": "relationship",
+      "emotionalState": "neglected",
+      "displayLabel": "When I Feel Emotionally Neglected",
+      "emoji": "😔",
+      "emotionalValidation": "Feeling unseen is painful. The Quran reminds us that rights are mutual. Your needs matter.",
+      "verses": [
+        {
+          "surah": "An-Nisa",
+          "verseRange": "4:19",
+          "arabicText": "",
+          "translation": "Live with them in kindness. For if you dislike them—perhaps you dislike a thing and Allah makes therein much good.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "Al-Baqarah",
+          "verseRange": "2:228",
+          "arabicText": "",
+          "translation": "And due to the wives is similar to what is expected of them, according to what is reasonable.",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [
+        {
+          "title": "Fear Allah Regarding Women",
+          "description": "Fear Allah regarding women.",
+          "hadithSource": "Sahih Muslim (1218)"
+        }
+      ],
+      "regulationLayer": {
+        "type": "journal",
+        "instruction": "Write 1 unmet need. Write 1 appreciation about your spouse.",
+        "dhikrText": "",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "What one need can I express with kindness?",
+        "What do I appreciate about them today?"
+      ],
+      "closingAffirmation": "I will communicate with gentleness. Allah sees my heart.",
+      "order": 3
+    },
+    {
+      "moduleType": "relationship",
+      "emotionalState": "hardened",
+      "displayLabel": "When My Heart Is Hardened",
+      "emoji": "🧊",
+      "emotionalValidation": "Has the time not come for hearts to soften? Allah can soften what has become hard. Turn to Him first.",
+      "verses": [
+        {
+          "surah": "Al-Hadid",
+          "verseRange": "57:16",
+          "arabicText": "",
+          "translation": "Has the time not come for those who have believed that their hearts should become humbly submissive at the remembrance of Allah?",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [
+        {
+          "title": "Mercy and the Miserable",
+          "description": "Mercy is not removed except from the miserable.",
+          "hadithSource": "Sunan al-Tirmidhi (1923)"
+        }
+      ],
+      "regulationLayer": {
+        "type": "dua",
+        "instruction": "Pray 2 rak'ah. Make dua for your spouse's well-being — not for their correction. This softens the ego.",
+        "dhikrText": "",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "When did my heart begin to harden?",
+        "Can I pray for their good before asking for change?"
+      ],
+      "closingAffirmation": "I ask Allah to soften my heart. Mercy begins with me.",
+      "order": 4
+    },
+    {
+      "moduleType": "relationship",
+      "emotionalState": "injustice",
+      "displayLabel": "When There Is Injustice",
+      "emoji": "⚖",
+      "emotionalValidation": "Stand firm in justice, but remember: reconciliation is best. Pause before major decisions.",
+      "verses": [
+        {
+          "surah": "An-Nisa",
+          "verseRange": "4:135",
+          "arabicText": "",
+          "translation": "O you who have believed, be persistently standing firm in justice.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "An-Nisa",
+          "verseRange": "4:128",
+          "arabicText": "",
+          "translation": "And settlement is best.",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [],
+      "regulationLayer": {
+        "type": "journal",
+        "instruction": "Pause 24 hours before major decisions. Ask: Is this ego or real harm? Can sulh (reconciliation) be achieved?",
+        "dhikrText": "",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "Is this ego or real harm?",
+        "Can sulh (reconciliation) be achieved?"
+      ],
+      "closingAffirmation": "Justice and reconciliation can coexist. I will seek both.",
+      "order": 5
+    },
+    {
+      "moduleType": "relationship",
+      "emotionalState": "separation",
+      "displayLabel": "When Considering Separation",
+      "emoji": "🥀",
+      "emotionalValidation": "If reconciliation is impossible, the Quran mandates separation with honor and fairness. Either keep in kindness or release with ihsan. Allah will make a way out.",
+      "verses": [
+        {
+          "surah": "Al-Baqarah",
+          "verseRange": "2:229",
+          "arabicText": "",
+          "translation": "Divorce is twice. Then, either keep [her] in an acceptable manner or release [her] with good treatment.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "At-Talaq",
+          "verseRange": "65:2-3",
+          "arabicText": "",
+          "translation": "And whoever relies upon Allah - then He is sufficient for him. Indeed, Allah will accomplish His purpose.",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [],
+      "regulationLayer": {
+        "type": "journal",
+        "instruction": "Journal your fear. Journal your relief. Pray Istikhara before any decision.",
+        "dhikrText": "",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "What am I truly afraid of?",
+        "What would relief look like?",
+        "Have I prayed Istikhara?"
+      ],
+      "closingAffirmation": "Allah will make a way out. I trust His plan.",
+      "order": 6
+    },
+    {
+      "moduleType": "relationship",
+      "emotionalState": "parenting",
+      "displayLabel": "Parenting Burnout",
+      "emoji": "👨‍👩‍👧",
+      "emotionalValidation": "Each of you is a shepherd. Your children are an amanah. Protect them and yourself from the Fire. Be gentle with yourself and with them.",
+      "verses": [
+        {
+          "surah": "Al-Isra",
+          "verseRange": "17:23",
+          "arabicText": "",
+          "translation": "And your Lord has decreed that you not worship except Him, and to parents, good treatment.",
+          "hadithRef": ""
+        },
+        {
+          "surah": "At-Tahrim",
+          "verseRange": "66:6",
+          "arabicText": "",
+          "translation": "O you who have believed, protect yourselves and your families from a Fire.",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [
+        {
+          "title": "Each of You is a Shepherd",
+          "description": "Each of you is a shepherd and is responsible for his flock.",
+          "hadithSource": "Sahih al-Bukhari (893)"
+        }
+      ],
+      "regulationLayer": {
+        "type": "journal",
+        "instruction": "Lower your voice consciously. Model the behavior you want instead of forcing it.",
+        "dhikrText": "",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "Am I modeling what I ask of them?",
+        "Can I lower my voice and speak with calm?"
+      ],
+      "closingAffirmation": "I am doing my best. Allah sees my efforts. My children are a blessing.",
+      "order": 7
+    },
+    {
+      "moduleType": "relationship",
+      "emotionalState": "resentment",
+      "displayLabel": "Resentment Healing",
+      "emoji": "🌿",
+      "emotionalValidation": "Whoever forgives and is patient - that is strength. Allah can reconcile what seems broken.",
+      "verses": [
+        {
+          "surah": "Ash-Shura",
+          "verseRange": "42:43",
+          "arabicText": "",
+          "translation": "And whoever is patient and forgives - indeed, that is of the matters [requiring] determination.",
+          "hadithRef": ""
+        }
+      ],
+      "sunnahPractices": [],
+      "regulationLayer": {
+        "type": "dhikr",
+        "instruction": "Repeat: Allahumma aslih baynana (O Allah, reconcile between us).",
+        "dhikrText": "Allahumma aslih baynana",
+        "breathingConfig": null
+      },
+      "reflectionPrompts": [
+        "What am I holding onto that I can release?",
+        "Can I ask Allah to soften both our hearts?"
+      ],
+      "closingAffirmation": "I choose forgiveness. Allahumma aslih baynana.",
+      "order": 8
+    }
+  ]
+}

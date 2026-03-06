@@ -11,6 +11,14 @@ export const COLORS = {
   success: '#10B981',
   warning: '#F59E0B',
   info: '#3B82F6',
+  // Semantic tokens for design system
+  surface: '#FFFFFF',
+  surfaceVariant: '#F1F5F9',
+  border: '#E2E8F0',
+  borderLight: '#F1F5F9',
+  overlay: 'rgba(0,0,0,0.4)',
+  textSecondary: '#64748B',
+  textTertiary: '#94A3B8',
   mood: {
     excellent: '#10B981',
     good: '#3B82F6',

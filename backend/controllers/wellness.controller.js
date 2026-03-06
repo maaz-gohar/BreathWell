@@ -4,6 +4,24 @@ const axios = require('axios');
 
 const groqApiKey = process.env.GROQ_API_KEY;
 
+const formatWellnessPlan = (plan) => {
+  const daily = plan.daily || [];
+  const weekly = plan.weekly || [];
+  const tips = plan.tips || [];
+  const times = ['Morning', 'Afternoon', 'Evening'];
+  return {
+    _id: 'wellness-plan',
+    dailyTasks: daily.map((task, i) => ({
+      title: typeof task === 'string' ? task : task.title || task,
+      description: typeof task === 'object' ? task.description || '' : '',
+      time: times[i % 3] || 'Anytime',
+      completed: false
+    })),
+    weeklyGoals: weekly,
+    motivationalQuote: tips[0] || 'Take care of your mind—it\'s the only one you have.'
+  };
+};
+
 exports.generateWellnessPlan = async (req, res) => {
   try {
     // Get user's recent moods and habits
@@ -70,7 +88,8 @@ exports.generateWellnessPlan = async (req, res) => {
       }
     }
 
-    res.json({ plan: aiPlan });
+    const formattedPlan = formatWellnessPlan(aiPlan);
+    res.json({ success: true, data: formattedPlan });
   } catch (error) {
     res.status(500).json({ message: 'Error generating wellness plan' });
   }
@@ -93,7 +112,8 @@ exports.getWellnessPlan = async (req, res) => {
       ]
     };
 
-    res.json({ plan: defaultPlan });
+    const formattedPlan = formatWellnessPlan(defaultPlan);
+    res.json({ success: true, data: formattedPlan });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching wellness plan' });
   }

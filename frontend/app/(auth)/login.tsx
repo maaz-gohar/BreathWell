@@ -13,6 +13,7 @@ import {
   View
 } from 'react-native';
 import { COLORS } from '../../constants/Colors';
+import { RADIUS, SPACING, TYPOGRAPHY } from '../../constants/theme';
 import { useAuth } from '../../context/AuthContext';
 
 export default function LoginScreen() {
@@ -31,7 +32,7 @@ export default function LoginScreen() {
     setIsLoading(true);
     try {
       await login({ email, password });
-      router.replace('/(app)/(tabs)');
+      router.replace('/(app)/(drawer)');
     } catch (error: any) {
       Alert.alert(
         'Login Failed',
@@ -118,66 +119,64 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: 20,
+    padding: SPACING.xl,
   },
   header: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: SPACING.xxxl,
   },
   title: {
-    fontSize: 48,
+    fontSize: 40,
     fontWeight: 'bold',
     color: '#fff',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 10,
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 6,
   },
   subtitle: {
-    fontSize: 16,
+    ...TYPOGRAPHY.body,
     color: '#fff',
-    marginTop: 10,
+    marginTop: SPACING.sm,
     textAlign: 'center',
   },
   formContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 30,
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.xl,
+    padding: SPACING.xxl,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.1,
-    shadowRadius: 20,
-    elevation: 10,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 16,
+    elevation: 8,
   },
   formTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    ...TYPOGRAPHY.heading2,
     color: COLORS.primary,
-    marginBottom: 30,
+    marginBottom: SPACING.xxl,
     textAlign: 'center',
   },
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: SPACING.xl,
   },
   label: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...TYPOGRAPHY.captionMedium,
     color: COLORS.text,
-    marginBottom: 8,
+    marginBottom: SPACING.sm,
   },
   input: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: 12,
-    padding: 15,
+    backgroundColor: COLORS.surfaceVariant,
+    borderRadius: RADIUS.md,
+    padding: SPACING.lg,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#e9ecef',
+    borderColor: COLORS.border,
   },
   button: {
     backgroundColor: COLORS.primary,
-    borderRadius: 12,
-    padding: 18,
+    borderRadius: RADIUS.md,
+    padding: SPACING.lg + 2,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: SPACING.sm,
   },
   buttonDisabled: {
     opacity: 0.7,
@@ -190,13 +189,14 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: SPACING.xl,
   },
   footerText: {
+    ...TYPOGRAPHY.caption,
     color: COLORS.textLight,
   },
   linkText: {
+    ...TYPOGRAPHY.captionMedium,
     color: COLORS.primary,
-    fontWeight: 'bold',
   },
 });

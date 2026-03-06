@@ -50,6 +50,8 @@ export default function MoodPicker({ selectedMood, onSelectMood }: MoodPickerPro
                 styles.moodLabel,
                 selectedMood === mood.id && styles.selectedMoodLabel,
               ]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
             >
               {mood.label}
             </Text>
@@ -91,9 +93,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   moodLabel: {
-    fontSize: 12,
+    fontSize: 8,
     color: COLORS.text,
     fontWeight: '500',
+    textAlign: 'center',
   },
   selectedMoodLabel: {
     color: '#fff',

@@ -10,13 +10,15 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 // import Button from '../../../components/ui/Button';
 // import Card from '../../../components/ui/Card';
-import Loading from '../../../components/ui/Loading';
-import { COLORS } from '../../../constants/Colors';
-import { useAuth } from '../../../context/AuthContext';
-import { chatService } from '../../../services/chat.service';
-import { Formatters } from '../../../utils/formatters';
+import Loading from '../../../../components/ui/Loading';
+import { COLORS } from '../../../../constants/Colors';
+import { SPACING } from '../../../../constants/theme';
+import { useAuth } from '../../../../context/AuthContext';
+import { chatService } from '../../../../services/chat.service';
+import { Formatters } from '../../../../utils/formatters';
 
 interface Message {
   _id?: string;
@@ -28,6 +30,7 @@ interface Message {
 }
 
 export default function AiTherapistScreen() {
+  const insets = useSafeAreaInsets();
   const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
@@ -172,11 +175,11 @@ export default function AiTherapistScreen() {
       style={styles.container}
     >
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: (insets?.top ?? 0) + SPACING.xl }]}>
         <View style={styles.headerContent}>
           <View style={styles.headerText}>
             <Text style={styles.title}>AI Therapist</Text>
-            <Text style={styles.subtitle}>Guided conversations for healing</Text>
+            <Text style={styles.subtitle}>Islamic-guided conversations for healing</Text>
           </View>
         </View>
       </View>
@@ -192,6 +195,9 @@ export default function AiTherapistScreen() {
             <Text style={styles.chatSubtitle}>
               Type your message below to start chatting
             </Text>
+            <Text style={styles.disclaimer}>
+              Guidance is based on Islamic principles. For serious concerns, consult a professional and a qualified scholar.
+            </Text>
           </View>
         </View>
 
@@ -206,10 +212,13 @@ export default function AiTherapistScreen() {
               <Ionicons name="chatbubble-ellipses" size={64} color={COLORS.textLight} />
               <Text style={styles.emptyTitle}>Start a Conversation</Text>
               <Text style={styles.emptySubtitle}>
-                Your AI therapist is here to listen and help
+                Your Islamic-guided AI therapist is here to listen and help
               </Text>
               <Text style={styles.emptyHint}>
                 Share your thoughts and feelings
+              </Text>
+              <Text style={styles.emptyDisclaimer}>
+                Guidance is based on Islamic principles. For serious concerns, consult a professional and a qualified scholar.
               </Text>
             </View>
           ) : (
@@ -285,7 +294,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   header: {
-    paddingTop: Platform.OS === 'ios' ? 50 : 20,
     paddingBottom: 20,
     paddingHorizontal: 16,
     backgroundColor: COLORS.primary,
@@ -347,6 +355,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.textLight,
   },
+  disclaimer: {
+    fontSize: 11,
+    color: COLORS.textLight,
+    fontStyle: 'italic',
+    marginTop: 8,
+  },
   chatArea: {
     flex: 1,
   },
@@ -378,6 +392,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.textLight,
     fontStyle: 'italic',
+  },
+  emptyDisclaimer: {
+    fontSize: 11,
+    color: COLORS.textLight,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginTop: 12,
+    paddingHorizontal: 24,
   },
   messageContainer: {
     marginBottom: 16,

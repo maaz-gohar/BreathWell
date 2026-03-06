@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import HabitCard from '../../../components/habits/HabitCard';
 import HabitForm from '../../../components/habits/HabitForm';
+import AppScreenHeader from '../../../components/ui/AppScreenHeader';
 import Button from '../../../components/ui/Button';
 import Card from '../../../components/ui/Card';
 import Loading from '../../../components/ui/Loading';
@@ -112,10 +113,7 @@ export default function HabitsScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Habit Tracker</Text>
-        <Text style={styles.subtitle}>Build healthy routines</Text>
-      </View>
+      <AppScreenHeader title="Habit Tracker" subtitle="Build healthy routines" />
 
       {/* Streaks Summary - Updated to use streakSummary */}
       {streakSummary && (
