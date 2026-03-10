@@ -40,7 +40,7 @@ export default function Input({
       >
         <TextInput
           style={styles.input}
-          placeholderTextColor="#9CA3AF"
+          placeholderTextColor={COLORS.textSecondary}
           secureTextEntry={secureTextEntry && !showPassword}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
@@ -54,13 +54,13 @@ export default function Input({
             <Ionicons
               name={showPassword ? 'eye-off' : 'eye'}
               size={20}
-              color="#9CA3AF"
+              color={COLORS.textSecondary}
             />
           </TouchableOpacity>
         )}
         {icon && !secureTextEntry && (
           <TouchableOpacity onPress={onIconPress} style={styles.iconButton}>
-            <Ionicons name={icon as any} size={20} color="#9CA3AF" />
+            <Ionicons name={icon as any} size={20} color={COLORS.textSecondary} />
           </TouchableOpacity>
         )}
       </View>
@@ -82,15 +82,15 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F9FAFB',
+    backgroundColor: COLORS.surfaceVariant,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: COLORS.border,
     borderRadius: 12,
     paddingHorizontal: 16,
   },
   inputContainerFocused: {
     borderColor: COLORS.primary,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.surface,
   },
   inputContainerError: {
     borderColor: COLORS.error,

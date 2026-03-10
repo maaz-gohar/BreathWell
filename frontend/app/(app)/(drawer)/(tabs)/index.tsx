@@ -14,7 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Card from '../../../../components/ui/Card';
 import { API_CONFIG } from '../../../../constants/API';
 import { COLORS } from '../../../../constants/Colors';
-import { RADIUS, SPACING, TYPOGRAPHY } from '../../../../constants/theme';
+import { LAYOUT, RADIUS, SPACING, TYPOGRAPHY } from '../../../../constants/theme';
 import { useOpenDrawer } from '../../../../hooks/useOpenDrawer';
 import { useAuth } from '../../../../context/AuthContext';
 import { moodService } from '../../../../services/mood.service';
@@ -73,18 +73,15 @@ export default function HomeScreen() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: insets.bottom + 80 }}>
-      <LinearGradient
-        colors={[COLORS.primary, COLORS.primaryLight]}
-        style={[styles.header, { paddingTop: insets.top + SPACING.xxl }]}
-      >
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: insets.bottom + 80 }} showsVerticalScrollIndicator={false}>
+      <View style={[styles.header, { paddingTop: insets.top + SPACING.xxl }]}>
         <View style={styles.headerContent}>
           <TouchableOpacity
             onPress={openDrawer}
             style={styles.menuButton}
             hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
           >
-            <Ionicons name="menu" size={28} color="#fff" />
+            <Ionicons name="menu" size={28} color={COLORS.primary} />
           </TouchableOpacity>
           <View style={styles.headerTextWrap}>
             <Text style={styles.greeting}>Assalamu Alaikum,</Text>
@@ -97,7 +94,7 @@ export default function HomeScreen() {
             />
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Today's Mood</Text>
@@ -110,7 +107,7 @@ export default function HomeScreen() {
                   { backgroundColor: getMoodColor(todayMood.mood) },
                 ]}
               >
-                <Ionicons name="happy" size={32} color="#fff" />
+                <Ionicons name="happy" size={32} color={COLORS.text} />
               </View>
               <View style={styles.moodInfo}>
                 <Text style={styles.moodText}>
@@ -164,12 +161,9 @@ export default function HomeScreen() {
             style={styles.actionCard}
             onPress={() => router.push('/(drawer)/(tabs)/breath')}
           >
-            <LinearGradient
-              colors={[COLORS.secondary, '#34D399']}
-              style={styles.actionIcon}
-            >
-              <Ionicons name="fitness" size={24} color="#fff" />
-            </LinearGradient>
+            <View style={[styles.actionIcon, { backgroundColor: COLORS.primary }]}>
+              <Ionicons name="fitness" size={24} color={COLORS.text} />
+            </View>
             <Text style={styles.actionText}>Breathing</Text>
           </TouchableOpacity>
 
@@ -177,12 +171,9 @@ export default function HomeScreen() {
             style={styles.actionCard}
             onPress={() => router.push('/journal')}
           >
-            <LinearGradient
-              colors={[COLORS.accent, '#FBBF24']}
-              style={styles.actionIcon}
-            >
-              <Ionicons name="journal" size={24} color="#fff" />
-            </LinearGradient>
+            <View style={[styles.actionIcon, { backgroundColor: COLORS.primaryLight }]}>
+              <Ionicons name="journal" size={24} color={COLORS.text} />
+            </View>
             <Text style={styles.actionText}>Journal</Text>
           </TouchableOpacity>
 
@@ -190,12 +181,9 @@ export default function HomeScreen() {
             style={styles.actionCard}
             onPress={() => router.push('/(drawer)/(tabs)/ai-therapist')}
           >
-            <LinearGradient
-              colors={[COLORS.primary, '#818CF8']}
-              style={styles.actionIcon}
-            >
-              <Ionicons name="chatbubbles" size={24} color="#fff" />
-            </LinearGradient>
+            <View style={[styles.actionIcon, { backgroundColor: COLORS.primaryLight + 'CC' }]}>
+              <Ionicons name="chatbubbles" size={24} color={COLORS.text} />
+            </View>
             <Text style={styles.actionText}>AI Therapist</Text>
           </TouchableOpacity>
 
@@ -203,24 +191,26 @@ export default function HomeScreen() {
             style={styles.actionCard}
             onPress={() => router.push('/heal-well')}
           >
-            <LinearGradient
-              colors={['#1E3A5F', '#2E5077']}
-              style={styles.actionIcon}
-            >
-              <Ionicons name="moon" size={24} color="#fff" />
-            </LinearGradient>
+            <View style={[styles.actionIcon, { backgroundColor: COLORS.primary + '99' }]}>
+              <Ionicons name="moon" size={24} color={COLORS.text} />
+            </View>
             <Text style={styles.actionText}>Heal Well</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       {wellnessPlan?.motivationalQuote && (
-        <Card style={styles.quoteCard}>
-          <View style={styles.quoteContent}>
-            <Entypo name="quote" size={24} color={COLORS.primary} />
-            <Text style={styles.quoteText}>{wellnessPlan.motivationalQuote}</Text>
-          </View>
-        </Card>
+        <View style={styles.quoteCardWrap}>
+          <LinearGradient
+            colors={[COLORS.primaryLight + '35', COLORS.surface, COLORS.accent + '15']}
+            style={styles.quoteCard}
+          >
+            <View style={styles.quoteContent}>
+              <Entypo name="quote" size={28} color={COLORS.primary} />
+              <Text style={styles.quoteText}>{wellnessPlan.motivationalQuote}</Text>
+            </View>
+          </LinearGradient>
+        </View>
       )}
     </ScrollView>
   );
@@ -232,13 +222,14 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   header: {
-    padding: SPACING.xl,
-    borderBottomLeftRadius: RADIUS.xl + 4,
-    borderBottomRightRadius: RADIUS.xl + 4,
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    paddingBottom: SPACING.lg,
+    backgroundColor: COLORS.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.borderLight,
   },
   headerContent: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
   menuButton: {
@@ -250,23 +241,23 @@ const styles = StyleSheet.create({
   },
   greeting: {
     ...TYPOGRAPHY.caption,
-    color: '#fff',
-    opacity: 0.9,
+    color: COLORS.textLight,
   },
   userName: {
     ...TYPOGRAPHY.heading1,
-    color: '#fff',
+    color: COLORS.text,
     marginTop: SPACING.xs,
   },
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     borderWidth: 2,
-    borderColor: '#fff',
+    borderColor: COLORS.border,
   },
   section: {
-    padding: SPACING.xl,
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    paddingTop: LAYOUT.sectionSpacingVertical,
   },
   sectionTitle: {
     ...TYPOGRAPHY.heading3,
@@ -279,9 +270,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   moodIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: SPACING.lg,
@@ -289,7 +280,7 @@ const styles = StyleSheet.create({
   moodInfo: { flex: 1 },
   moodText: {
     ...TYPOGRAPHY.bodyMedium,
-    fontSize: 18,
+    fontSize: 17,
     color: COLORS.text,
   },
   moodNote: {
@@ -303,7 +294,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: COLORS.surface,
     borderRadius: RADIUS.lg,
-    padding: SPACING.xl,
+    padding: LAYOUT.cardPadding,
     borderWidth: 2,
     borderColor: COLORS.border,
     borderStyle: 'dashed',
@@ -316,7 +307,7 @@ const styles = StyleSheet.create({
   taskCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: SPACING.sm,
+    marginBottom: LAYOUT.gridGap,
   },
   taskCheckbox: { marginRight: SPACING.lg },
   taskContent: { flex: 1 },
@@ -355,19 +346,19 @@ const styles = StyleSheet.create({
     width: '48%',
     backgroundColor: COLORS.surface,
     borderRadius: RADIUS.lg,
-    padding: SPACING.xl,
+    padding: LAYOUT.cardPadding,
     alignItems: 'center',
-    marginBottom: SPACING.lg,
+    marginBottom: LAYOUT.gridGap,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 1,
   },
   actionIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: SPACING.sm,
@@ -376,7 +367,18 @@ const styles = StyleSheet.create({
     ...TYPOGRAPHY.captionMedium,
     color: COLORS.text,
   },
-  quoteCard: { margin: SPACING.xl, marginTop: 0 },
+  quoteCardWrap: {
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    marginTop: LAYOUT.sectionSpacingVertical,
+    marginBottom: SPACING.xxl,
+  },
+  quoteCard: {
+    padding: LAYOUT.cardPadding,
+    borderRadius: RADIUS.lg,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: COLORS.borderLight,
+  },
   quoteContent: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -386,6 +388,7 @@ const styles = StyleSheet.create({
     ...TYPOGRAPHY.body,
     fontStyle: 'italic',
     color: COLORS.text,
-    marginLeft: SPACING.sm,
+    marginLeft: SPACING.md,
+    lineHeight: 24,
   },
 });

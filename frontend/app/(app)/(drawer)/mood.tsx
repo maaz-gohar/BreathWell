@@ -13,7 +13,7 @@ import Button from '../../../components/ui/Button';
 import Card from '../../../components/ui/Card';
 import Input from '../../../components/ui/Input';
 import { COLORS } from '../../../constants/Colors';
-import { RADIUS, SPACING, TYPOGRAPHY } from '../../../constants/theme';
+import { LAYOUT, RADIUS, SPACING, TYPOGRAPHY } from '../../../constants/theme';
 import { useAuth } from '../../../context/AuthContext';
 import { moodService } from '../../../services/mood.service';
 import { Formatters } from '../../../utils/formatters';
@@ -297,17 +297,17 @@ const styles = StyleSheet.create({
   },
   title: {
     ...TYPOGRAPHY.heading1,
-    color: '#FFFFFF',
+    color: COLORS.text,
     marginBottom: SPACING.sm,
   },
   subtitle: {
     ...TYPOGRAPHY.body,
-    color: '#FFFFFF',
-    opacity: 0.9,
+    color: COLORS.textLight,
   },
   section: {
-    margin: SPACING.lg,
-    marginTop: SPACING.xl,
+    marginHorizontal: LAYOUT.screenPaddingHorizontal,
+    marginTop: LAYOUT.sectionSpacingVertical,
+    padding: LAYOUT.cardPadding,
   },
   sectionTitle: {
     ...TYPOGRAPHY.heading3,
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   tag: {
-    backgroundColor: '#EDE9FE',
+    backgroundColor: COLORS.surfaceVariant,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: COLORS.border,
   },
   sliderDotActive: {
     backgroundColor: COLORS.primary,
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   tagInput: {
-    backgroundColor: '#F3F4F6',
+    backgroundColor: COLORS.surfaceVariant,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,

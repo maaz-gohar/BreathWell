@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import {
@@ -36,12 +35,9 @@ export default function HealWellHub() {
           onPress={() => router.push('/heal-well/sleep')}
         >
           <Card style={styles.moduleCard}>
-            <LinearGradient
-              colors={['#1E3A5F', '#2E5077']}
-              style={styles.moduleIcon}
-            >
-              <Ionicons name="moon" size={40} color="#fff" />
-            </LinearGradient>
+            <View style={[styles.moduleIcon, { backgroundColor: COLORS.surfaceVariant }]}>
+              <Ionicons name="moon" size={40} color={COLORS.text} />
+            </View>
             <View style={styles.moduleContent}>
               <Text style={styles.moduleTitle}>Sleep & Rest</Text>
               <Text style={styles.moduleDesc}>
@@ -62,12 +58,9 @@ export default function HealWellHub() {
           onPress={() => router.push('/heal-well/relationships')}
         >
           <Card style={styles.moduleCard}>
-            <LinearGradient
-              colors={['#7C3AED', '#A78BFA']}
-              style={styles.moduleIcon}
-            >
-              <Ionicons name="heart" size={40} color="#fff" />
-            </LinearGradient>
+            <View style={[styles.moduleIcon, { backgroundColor: COLORS.info }]}>
+              <Ionicons name="heart" size={40} color={COLORS.text} />
+            </View>
             <View style={styles.moduleContent}>
               <Text style={styles.moduleTitle}>Relationships</Text>
               <Text style={styles.moduleDesc}>
@@ -108,13 +101,12 @@ const styles = StyleSheet.create({
   },
   title: {
     ...TYPOGRAPHY.heading1,
-    color: '#fff',
+    color: COLORS.text,
     marginBottom: SPACING.sm,
   },
   subtitle: {
     ...TYPOGRAPHY.body,
-    color: '#fff',
-    opacity: 0.95,
+    color: COLORS.textLight,
   },
   section: {
     padding: SPACING.xl,

@@ -118,7 +118,7 @@ export default function RelationshipsModuleScreen() {
                   style={styles.breathButton}
                   onPress={() => router.push('/breath')}
                 >
-                  <Ionicons name="leaf" size={20} color="#fff" />
+                  <Ionicons name="leaf" size={20} color={COLORS.text} />
                   <Text style={styles.breathButtonText}>Open Breathing</Text>
                 </TouchableOpacity>
               )}
@@ -127,7 +127,7 @@ export default function RelationshipsModuleScreen() {
                   style={styles.breathButton}
                   onPress={() => router.push('/journal')}
                 >
-                  <Ionicons name="journal" size={20} color="#fff" />
+                  <Ionicons name="journal" size={20} color={COLORS.text} />
                   <Text style={styles.breathButtonText}>Open Journal</Text>
                 </TouchableOpacity>
               )}
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   moduleOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.surface,
     padding: 16,
     borderRadius: 12,
     marginBottom: 10,
@@ -240,14 +240,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.secondary,
+    backgroundColor: COLORS.primaryLight,
     padding: 14,
     borderRadius: 12,
     marginTop: 16
   },
-  breathButtonText: { color: '#fff', fontWeight: '600', marginLeft: 8 },
+  breathButtonText: { color: COLORS.text, fontWeight: '600', marginLeft: 8 },
   reflectionCard: { padding: 16 },
   reflectionPrompt: { fontSize: 15, color: COLORS.text, lineHeight: 24, marginBottom: 6 },
-  affirmationCard: { margin: 20, padding: 20, backgroundColor: '#F0F9FF' },
+  affirmationCard: { margin: 20, padding: 20, backgroundColor: COLORS.primaryLight },
   affirmationText: { fontSize: 16, fontWeight: '600', color: COLORS.primary, textAlign: 'center' }
 });

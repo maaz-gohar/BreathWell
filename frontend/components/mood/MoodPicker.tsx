@@ -83,13 +83,13 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 15,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
-    backgroundColor: '#fff',
+    borderColor: COLORS.border,
+    backgroundColor: COLORS.surface,
     width: '18%',
     marginBottom: 10,
   },
   moodEmoji: {
-    fontSize: 28,
+    fontSize: 18,
     marginBottom: 5,
   },
   moodLabel: {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   selectedMoodLabel: {
-    color: '#fff',
+    color: COLORS.text,
     fontWeight: 'bold',
   },
 });

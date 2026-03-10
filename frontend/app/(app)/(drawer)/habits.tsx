@@ -15,6 +15,7 @@ import Button from '../../../components/ui/Button';
 import Card from '../../../components/ui/Card';
 import Loading from '../../../components/ui/Loading';
 import { COLORS } from '../../../constants/Colors';
+import { LAYOUT } from '../../../constants/theme';
 import { useAuth } from '../../../context/AuthContext';
 import { habitService } from '../../../services/habit.service';
 import type { StreakSummary } from '../../../types'; // Add this import
@@ -154,7 +155,7 @@ export default function HabitsScreen() {
           <Button
             title="Add Habit"
             onPress={() => setShowForm(true)}
-            icon={<Ionicons name="add" size={20} color="#FFFFFF" />}
+            icon={<Ionicons name="add" size={20} color={COLORS.text} />}
             size="small"
           />
         </View>
@@ -219,17 +220,16 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.text,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#FFFFFF',
-    opacity: 0.9,
+    color: COLORS.textLight,
   },
   streaksCard: {
-    margin: 16,
-    marginTop: 20,
+    marginHorizontal: LAYOUT.screenPaddingHorizontal,
+    marginTop: LAYOUT.sectionSpacingVertical,
   },
   streaksContainer: {
     flexDirection: 'row',
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: COLORS.secondary,
+    backgroundColor: COLORS.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
@@ -251,12 +251,11 @@ const styles = StyleSheet.create({
   streakCount: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.text,
   },
   streakLabel: {
     fontSize: 12,
-    color: '#FFFFFF',
-    opacity: 0.9,
+    color: COLORS.textLight,
   },
   streakName: {
     fontSize: 12,
@@ -264,7 +263,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   section: {
-    padding: 16,
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    paddingTop: LAYOUT.sectionSpacingVertical,
   },
   sectionHeader: {
     flexDirection: 'row',

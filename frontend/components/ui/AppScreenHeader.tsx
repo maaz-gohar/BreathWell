@@ -1,10 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS } from '../../constants/Colors';
-import { SPACING, TYPOGRAPHY } from '../../constants/theme';
+import { LAYOUT, SPACING, TYPOGRAPHY } from '../../constants/theme';
 import { useOpenDrawer } from '../../hooks/useOpenDrawer';
 
 interface AppScreenHeaderProps {
@@ -17,8 +16,7 @@ export default function AppScreenHeader({ title, subtitle }: AppScreenHeaderProp
   const openDrawer = useOpenDrawer();
 
   return (
-    <LinearGradient
-      colors={[COLORS.primary, COLORS.primaryLight]}
+    <View
       style={[styles.header, { paddingTop: insets.top + SPACING.md }]}
     >
       <View style={styles.row}>
@@ -27,7 +25,7 @@ export default function AppScreenHeader({ title, subtitle }: AppScreenHeaderProp
           style={styles.menuButton}
           hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
         >
-          <Ionicons name="menu" size={28} color="#fff" />
+          <Ionicons name="menu" size={28} color={COLORS.primary} />
         </TouchableOpacity>
         <View style={styles.titleWrap}>
           <Text style={styles.title} numberOfLines={1}>
@@ -40,14 +38,17 @@ export default function AppScreenHeader({ title, subtitle }: AppScreenHeaderProp
           ) : null}
         </View>
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   header: {
-    paddingHorizontal: SPACING.lg,
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
     paddingBottom: SPACING.lg,
+    backgroundColor: COLORS.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.borderLight,
   },
   row: {
     flexDirection: 'row',
@@ -62,12 +63,11 @@ const styles = StyleSheet.create({
   },
   title: {
     ...TYPOGRAPHY.heading2,
-    color: '#fff',
+    color: COLORS.text,
   },
   subtitle: {
     ...TYPOGRAPHY.caption,
-    color: '#fff',
-    opacity: 0.9,
+    color: COLORS.textLight,
     marginTop: 2,
   },
 });

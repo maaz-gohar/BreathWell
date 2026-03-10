@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -10,6 +10,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -17,14 +18,17 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Card from '../../../../components/ui/Card';
 import Loading from '../../../../components/ui/Loading';
 import { COLORS } from '../../../../constants/Colors';
-import { RADIUS, SPACING } from '../../../../constants/theme';
+import { LAYOUT, RADIUS, SPACING } from '../../../../constants/theme';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type BreathingTechnique = 'box' | '478' | 'relaxing' | 'triangle' | 'dhikrAllahHu' | 'tasbeehSlow' | 'yaSalaam' | 'yaHaleem';
 type BackgroundSound = 'ocean' | 'rain' | 'forest' | 'white-noise' | 'none';
+type TechniqueCategory = 'all' | 'stress' | 'sleep' | 'focus' | 'dhikr';
 
 interface TechniqueConfig {
   name: string;
   description: string;
+  category: TechniqueCategory;
   phases: { duration: number; label: string; instruction: string; dhikrText?: string }[];
   cycles: number;
   color: string;
@@ -95,6 +99,7 @@ export default function BreathScreen() {
     box: {
       name: 'Box Breathing',
       description: 'Calm your nervous system with equal duration breaths. Perfect for stress reduction.',
+      category: 'stress',
       phases: [
         { duration: 4, label: 'INHALE', instruction: 'Breathe in slowly through your nose' },
         { duration: 4, label: 'HOLD', instruction: 'Hold your breath comfortably' },
@@ -107,6 +112,7 @@ export default function BreathScreen() {
     '478': {
       name: '4-7-8 Breathing',
       description: 'Promote relaxation and sleep with this calming technique. Great for anxiety relief.',
+      category: 'sleep',
       phases: [
         { duration: 4, label: 'INHALE', instruction: 'Inhale quietly through your nose' },
         { duration: 7, label: 'HOLD', instruction: 'Hold your breath' },
@@ -118,6 +124,7 @@ export default function BreathScreen() {
     relaxing: {
       name: 'Relaxing Breath',
       description: 'Gentle breathing for stress relief and mindfulness practice.',
+      category: 'stress',
       phases: [
         { duration: 5, label: 'INHALE', instruction: 'Inhale deeply and slowly' },
         { duration: 2, label: 'HOLD', instruction: 'Pause briefly' },
@@ -129,6 +136,7 @@ export default function BreathScreen() {
     triangle: {
       name: 'Triangle Breathing',
       description: 'Energizing breathing pattern to increase focus and alertness.',
+      category: 'focus',
       phases: [
         { duration: 3, label: 'INHALE', instruction: 'Quick, energizing inhale' },
         { duration: 1, label: 'HOLD', instruction: 'Brief pause' },
@@ -140,6 +148,7 @@ export default function BreathScreen() {
     dhikrAllahHu: {
       name: '4/6 Dhikr (Allah-Hu)',
       description: 'Inhale saying "Allah", exhale saying "Hu". Combines breathing regulation with remembrance.',
+      category: 'dhikr',
       phases: [
         { duration: 4, label: 'INHALE', instruction: 'Inhale slowly, say "Allah" in your heart', dhikrText: 'Allah' },
         { duration: 6, label: 'EXHALE', instruction: 'Exhale slowly, say "Hu" in your heart', dhikrText: 'Hu' },
@@ -150,6 +159,7 @@ export default function BreathScreen() {
     tasbeehSlow: {
       name: 'Tasbeeh Slow (SubhanAllah)',
       description: 'Exhale with "SubhanAllah" on each breath. 33 rounds naturally slows heart rate.',
+      category: 'dhikr',
       phases: [
         { duration: 4, label: 'INHALE', instruction: 'Inhale deeply and slowly' },
         { duration: 6, label: 'EXHALE', instruction: 'Exhale slowly, say "SubhanAllah"', dhikrText: 'SubhanAllah' },
@@ -160,16 +170,18 @@ export default function BreathScreen() {
     yaSalaam: {
       name: 'Ya Salaam (Anxiety Relief)',
       description: 'Repeat "Ya Salaam" (The Source of Peace) with 4s inhale, 6s exhale. For anxiety and restlessness.',
+      category: 'dhikr',
       phases: [
         { duration: 4, label: 'INHALE', instruction: 'Inhale slowly' },
         { duration: 6, label: 'EXHALE', instruction: 'Exhale slowly, say "Ya Salaam"', dhikrText: 'Ya Salaam' },
       ],
       cycles: 10,
-      color: '#1E3A5F',
+      color: COLORS.text,
     },
     yaHaleem: {
       name: 'Ya Haleem (Anger Regulation)',
       description: 'Repeat "Ya Haleem" (The Most Forbearing) with 4s inhale, 6s exhale. For calming anger.',
+      category: 'dhikr',
       phases: [
         { duration: 4, label: 'INHALE', instruction: 'Inhale slowly' },
         { duration: 6, label: 'EXHALE', instruction: 'Exhale slowly, say "Ya Haleem"', dhikrText: 'Ya Haleem' },
@@ -178,6 +190,31 @@ export default function BreathScreen() {
       color: '#7C3AED',
     },
   };
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState<TechniqueCategory>('all');
+
+  const FILTER_TABS: { key: TechniqueCategory; label: string }[] = [
+    { key: 'all', label: 'All' },
+    { key: 'stress', label: 'Stress Relief' },
+    { key: 'sleep', label: 'Sleep' },
+    { key: 'focus', label: 'Focus' },
+    { key: 'dhikr', label: 'Dhikr' },
+  ];
+
+  const filteredTechniques = useMemo(() => {
+    const entries = Object.entries(techniques) as [BreathingTechnique, TechniqueConfig][];
+    const byCategory =
+      categoryFilter === 'all'
+        ? entries
+        : entries.filter(([, t]) => t.category === categoryFilter);
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return byCategory;
+    return byCategory.filter(
+      ([, t]) =>
+        t.name.toLowerCase().includes(q) || t.description.toLowerCase().includes(q)
+    );
+  }, [techniques, categoryFilter, searchQuery]);
 
   const currentTechnique = techniques[selectedTechnique];
   const currentSoundOption = soundOptions.find(opt => opt.key === selectedSound);
@@ -490,7 +527,7 @@ export default function BreathScreen() {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={[styles.scrollContent, { paddingBottom: (insets?.bottom ?? 0) + 80 }]}>
+    <ScrollView style={styles.container} contentContainerStyle={[styles.scrollContent, { paddingBottom: (insets?.bottom ?? 0) + 80 }]} showsVerticalScrollIndicator={false}>
       <View style={[styles.header, { paddingTop: (insets?.top ?? 0) + SPACING.xxl }]}>
         <Text style={styles.title}>Breathing Exercises</Text>
         <Text style={styles.subtitle}>Find calm and focus through mindful breathing</Text>
@@ -498,50 +535,87 @@ export default function BreathScreen() {
 
       {!isActive ? (
         <>
-          {/* Technique Selection */}
-          <Card style={styles.selectionCard}>
-            <Text style={styles.sectionTitle}>Choose Your Technique</Text>
-            <View style={styles.techniqueGrid}>
-              {Object.entries(techniques).map(([key, technique]) => (
+          {/* Search bar */}
+          <View style={styles.searchSection}>
+            <View style={styles.searchBar}>
+              <Ionicons name="search" size={20} color={COLORS.textLight} style={styles.searchIcon} />
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search techniques..."
+                placeholderTextColor={COLORS.textLight}
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+              <TouchableOpacity style={styles.filterIconButton} activeOpacity={0.7}>
+                <Ionicons name="options-outline" size={20} color={COLORS.text} />
+              </TouchableOpacity>
+            </View>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterTabs} contentContainerStyle={styles.filterTabsContent}>
+              {FILTER_TABS.map((tab) => (
                 <TouchableOpacity
-                  key={key}
-                  style={[
-                    styles.techniqueCard,
-                    selectedTechnique === key && styles.techniqueCardSelected,
-                    { borderColor: technique.color }
-                  ]}
-                  onPress={() => handleTechniqueChange(key as BreathingTechnique)}
+                  key={tab.key}
+                  style={[styles.filterPill, categoryFilter === tab.key && styles.filterPillActive]}
+                  onPress={() => setCategoryFilter(tab.key)}
                 >
-                  <View style={[styles.techniqueIcon, { backgroundColor: technique.color }]}>
-                    <Ionicons 
-                      name="leaf" 
-                      size={24} 
-                      color="#FFFFFF" 
-                    />
-                  </View>
-                  <Text style={styles.techniqueName}>{technique.name}</Text>
-                  <Text style={styles.techniqueDesc} numberOfLines={2}>
-                    {technique.description}
+                  <Text style={[styles.filterPillText, categoryFilter === tab.key && styles.filterPillTextActive]}>
+                    {tab.label}
                   </Text>
-                  <View style={styles.techniqueMeta}>
-                    <Text style={styles.techniqueMetaText}>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+
+          {/* Technique list — list-based cards */}
+          <View style={styles.listSection}>
+            {filteredTechniques.map(([key, technique]) => (
+              <TouchableOpacity
+                key={key}
+                style={[styles.listCard, selectedTechnique === key && styles.listCardSelected]}
+                onPress={() => handleTechniqueChange(key as BreathingTechnique)}
+                activeOpacity={0.7}
+              >
+                <View style={[styles.listCardIconWrap, { backgroundColor: technique.color + '30' }]}>
+                  <Ionicons name="leaf" size={28} color={technique.color} />
+                </View>
+                <View style={styles.listCardContent}>
+                  <Text style={styles.listCardTitle}>{technique.name}</Text>
+                  <View style={styles.listCardMeta}>
+                    <Ionicons name="repeat-outline" size={14} color={COLORS.textLight} />
+                    <Text style={styles.listCardMetaText}>
                       {technique.cycles} cycles • {technique.phases.length} phases
                     </Text>
                   </View>
+                  <Text style={styles.listCardType} numberOfLines={1}>
+                    {FILTER_TABS.find(t => t.key === technique.category)?.label ?? 'Breathing'}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.listCardAction}
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    handleTechniqueChange(key as BreathingTechnique);
+                  }}
+                >
+                  <Text style={styles.listCardActionText}>Start</Text>
+                  <Ionicons name="chevron-forward" size={16} color={COLORS.text} />
                 </TouchableOpacity>
-              ))}
-            </View>
-          </Card>
+              </TouchableOpacity>
+            ))}
+          </View>
 
-          {/* Selected Technique Details */}
-          <Card style={styles.detailsCard}>
-            <View style={styles.detailsHeader}>
-              <View style={[styles.techniqueColor, { backgroundColor: currentTechnique.color }]} />
-              <View style={styles.detailsTitle}>
-                <Text style={styles.currentTechniqueName}>{currentTechnique.name}</Text>
-                <Text style={styles.currentTechniqueDesc}>{currentTechnique.description}</Text>
+          {/* Selected Technique — Hero card with soft gradient */}
+          <View style={styles.detailsSection}>
+            <LinearGradient
+              colors={[COLORS.primaryLight + '40', COLORS.surface]}
+              style={styles.detailsCardGradient}
+            >
+              <View style={styles.detailsHeader}>
+                <View style={[styles.techniqueColor, { backgroundColor: currentTechnique.color }]} />
+                <View style={styles.detailsTitle}>
+                  <Text style={styles.currentTechniqueName}>{currentTechnique.name}</Text>
+                  <Text style={styles.currentTechniqueDesc}>{currentTechnique.description}</Text>
+                </View>
               </View>
-            </View>
 
             <View style={styles.phaseList}>
               {currentTechnique.phases.map((phase, index) => (
@@ -558,22 +632,23 @@ export default function BreathScreen() {
               ))}
             </View>
 
-            <View style={styles.sessionInfo}>
-              <View style={styles.infoItem}>
-                <Ionicons name="repeat" size={20} color={COLORS.textLight} />
-                <Text style={styles.infoText}>{currentTechnique.cycles} cycles</Text>
+              <View style={styles.sessionInfo}>
+                <View style={styles.infoItem}>
+                  <Ionicons name="repeat" size={20} color={COLORS.textLight} />
+                  <Text style={styles.infoText}>{currentTechnique.cycles} cycles</Text>
+                </View>
+                <View style={styles.infoItem}>
+                  <Ionicons name="time" size={20} color={COLORS.textLight} />
+                  <Text style={styles.infoText}>
+                    {currentTechnique.phases.reduce((sum, phase) => sum + phase.duration, 0) * currentTechnique.cycles}s total
+                  </Text>
+                </View>
               </View>
-              <View style={styles.infoItem}>
-                <Ionicons name="time" size={20} color={COLORS.textLight} />
-                <Text style={styles.infoText}>
-                  {currentTechnique.phases.reduce((sum, phase) => sum + phase.duration, 0) * currentTechnique.cycles}s total
-                </Text>
-              </View>
-            </View>
-          </Card>
+            </LinearGradient>
+          </View>
 
           {/* Sound Selection */}
-          <Card style={styles.soundCard}>
+          <View style={styles.section}>
             <Text style={styles.sectionTitle}>Background Sound</Text>
             <View style={styles.soundOptions}>
               {soundOptions.map((option) => (
@@ -606,9 +681,10 @@ export default function BreathScreen() {
                 ? 'Session will be silent' 
                 : `${currentSoundOption?.label} will play during your session`}
             </Text>
-          </Card>
+          </View>
 
           {/* Start Button */}
+          <View style={styles.startButtonWrap}>
           <TouchableOpacity
             style={[styles.startButton, { backgroundColor: currentTechnique.color }]}
             onPress={startBreathing}
@@ -623,6 +699,7 @@ export default function BreathScreen() {
               </>
             )}
           </TouchableOpacity>
+          </View>
         </>
       ) : (
         /* Active Session View */
@@ -673,7 +750,7 @@ export default function BreathScreen() {
           <View style={styles.controls}>
             {/* Sound Control */}
             <TouchableOpacity
-              style={[styles.soundControl, selectedSound !== 'none' && { backgroundColor: '#E3F2FD' }]}
+              style={[styles.soundControl, selectedSound !== 'none' && { backgroundColor: COLORS.primaryLight + '30' }]}
               onPress={() => setShowSoundMenu(!showSoundMenu)}
             >
               <Ionicons 
@@ -753,9 +830,9 @@ export default function BreathScreen() {
               <Ionicons 
                 name={isSoundPlaying ? 'volume-high' : 'volume-mute'} 
                 size={16} 
-                color={isSoundPlaying ? '#4CAF50' : COLORS.textLight} 
+                color={isSoundPlaying ? COLORS.success : COLORS.textLight} 
               />
-              <Text style={[styles.soundStatusText, { color: isSoundPlaying ? '#4CAF50' : COLORS.textLight }]}>
+              <Text style={[styles.soundStatusText, { color: isSoundPlaying ? COLORS.success : COLORS.textLight }]}>
                 {isSoundPlaying ? `${currentSoundOption?.label} playing` : 'Sound loading...'}
               </Text>
             </View>
@@ -775,135 +852,220 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   header: {
-    padding: SPACING.xl,
-    backgroundColor: COLORS.primary,
-    borderBottomLeftRadius: RADIUS.xl,
-    borderBottomRightRadius: RADIUS.xl,
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    paddingBottom: SPACING.xl,
+    backgroundColor: COLORS.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.borderLight,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: SPACING.sm,
+    fontSize: 26,
+    fontWeight: '700',
+    color: COLORS.text,
+    marginBottom: SPACING.xs,
+    letterSpacing: 0.3,
   },
   subtitle: {
-    fontSize: 16,
-    color: '#FFFFFF',
-    opacity: 0.9,
+    fontSize: 15,
+    color: COLORS.textLight,
+    lineHeight: 22,
   },
-  selectionCard: {
-    margin: 16,
-    marginTop: 20,
-    padding: 16,
+  section: {
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    marginTop: LAYOUT.sectionSpacingVertical,
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: COLORS.text,
-    marginBottom: 16,
+    marginBottom: SPACING.lg,
   },
-  techniqueGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+  searchSection: {
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    marginTop: SPACING.lg,
   },
-  techniqueCard: {
-    width: '48%',
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 2,
-    borderColor: '#E5E7EB',
-    marginBottom: 12,
-    alignItems: 'center',
-  },
-  techniqueCardSelected: {
-    borderWidth: 2,
-    backgroundColor: '#F8FAFC',
-  },
-  techniqueIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 8,
-  },
-  techniqueName: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: COLORS.text,
-    marginBottom: 4,
-    textAlign: 'center',
-  },
-  techniqueDesc: {
-    fontSize: 12,
-    color: COLORS.textLight,
-    textAlign: 'center',
-    marginBottom: 8,
-  },
-  techniqueMeta: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    backgroundColor: '#F3F4F6',
-    borderRadius: 8,
-  },
-  techniqueMetaText: {
-    fontSize: 10,
-    color: COLORS.textLight,
-  },
-  detailsCard: {
-    margin: 16,
-    marginTop: 0,
-    padding: 16,
-  },
-  detailsHeader: {
+  searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    backgroundColor: COLORS.surfaceVariant,
+    borderRadius: RADIUS.lg,
+    paddingHorizontal: SPACING.md,
+    height: 48,
   },
-  techniqueColor: {
+  searchIcon: {
+    marginRight: SPACING.sm,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: COLORS.text,
+    paddingVertical: 0,
+  },
+  filterIconButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
+    backgroundColor: COLORS.primaryLight + '80',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  filterTabs: {
+    marginTop: SPACING.md,
+  },
+  filterTabsContent: {
+    paddingRight: LAYOUT.screenPaddingHorizontal,
+  },
+  filterPill: {
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.sm,
+    borderRadius: RADIUS.full,
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    marginRight: SPACING.sm,
+  },
+  filterPillActive: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+  },
+  filterPillText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: COLORS.text,
+  },
+  filterPillTextActive: {
+    color: COLORS.text,
+    fontWeight: '700',
+  },
+  listSection: {
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    marginTop: LAYOUT.sectionSpacingVertical,
+    paddingBottom: SPACING.md,
+  },
+  listCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.lg,
+    padding: LAYOUT.cardPadding,
+    marginBottom: SPACING.md,
+    borderWidth: 2,
+    borderColor: 'transparent',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+  },
+  listCardSelected: {
+    borderColor: COLORS.primary,
+    backgroundColor: COLORS.primaryLight + '35',
+  },
+  listCardIconWrap: {
+    width: 64,
+    height: 64,
+    borderRadius: RADIUS.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: SPACING.md,
+  },
+  listCardContent: {
+    flex: 1,
+    minWidth: 0,
+  },
+  listCardTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: COLORS.text,
+    marginBottom: 4,
+  },
+  listCardMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
+  },
+  listCardMetaText: {
+    fontSize: 13,
+    color: COLORS.textLight,
+    marginLeft: 4,
+  },
+  listCardType: {
+    fontSize: 12,
+    color: COLORS.textLight,
+  },
+  listCardAction: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    borderRadius: RADIUS.md,
+    marginLeft: SPACING.sm,
+  },
+  listCardActionText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: COLORS.text,
+    marginRight: 4,
+  },
+  detailsSection: {
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    marginTop: LAYOUT.sectionSpacingVertical,
+  },
+  detailsCardGradient: {
+    padding: LAYOUT.cardPadding,
+    borderRadius: RADIUS.lg,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: COLORS.borderLight,
+  },
+  detailsHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: SPACING.xl,
+  },
+  techniqueColor: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
   },
   detailsTitle: {
     flex: 1,
-    marginLeft: 12,
+    marginLeft: SPACING.md,
   },
   currentTechniqueName: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '700',
     color: COLORS.text,
     marginBottom: 4,
   },
   currentTechniqueDesc: {
     fontSize: 14,
     color: COLORS.textLight,
-    lineHeight: 20,
+    lineHeight: 22,
   },
   phaseList: {
-    marginBottom: 20,
+    marginBottom: SPACING.xl,
   },
   phaseItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: SPACING.md,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomColor: COLORS.borderLight,
   },
   phaseIndicator: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: COLORS.surfaceVariant,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
+    marginRight: SPACING.md,
   },
   phaseNumber: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: '700',
     color: COLORS.text,
   },
   phaseContent: {
@@ -924,13 +1086,14 @@ const styles = StyleSheet.create({
     color: COLORS.textLight,
     fontStyle: 'italic',
     textAlign: 'right',
+    maxWidth: '45%',
   },
   sessionInfo: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    padding: 16,
-    backgroundColor: '#F8FAFC',
-    borderRadius: 12,
+    padding: SPACING.lg,
+    backgroundColor: COLORS.surfaceVariant,
+    borderRadius: RADIUS.md,
   },
   infoItem: {
     flexDirection: 'row',
@@ -939,33 +1102,29 @@ const styles = StyleSheet.create({
   infoText: {
     fontSize: 14,
     color: COLORS.text,
-    marginLeft: 8,
-  },
-  soundCard: {
-    margin: 16,
-    padding: 16,
+    marginLeft: SPACING.sm,
   },
   soundOptions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
   soundOption: {
     width: '30%',
     alignItems: 'center',
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: '#FFFFFF',
+    padding: SPACING.md,
+    borderRadius: RADIUS.md,
+    backgroundColor: COLORS.surface,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
-    marginBottom: 12,
+    borderColor: COLORS.border,
+    marginBottom: LAYOUT.gridGap,
   },
   soundOptionSelected: {
-    backgroundColor: '#F0F9FF',
+    backgroundColor: COLORS.primaryLight + '30',
     borderColor: COLORS.primary,
   },
   soundIcon: {
-    marginBottom: 8,
+    marginBottom: SPACING.xs,
   },
   soundLabel: {
     fontSize: 12,
@@ -981,21 +1140,24 @@ const styles = StyleSheet.create({
     color: COLORS.textLight,
     fontStyle: 'italic',
     textAlign: 'center',
-    marginTop: 8,
+    marginTop: SPACING.sm,
+  },
+  startButtonWrap: {
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    marginTop: LAYOUT.sectionSpacingVertical,
+    marginBottom: 40,
   },
   startButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 16,
-    margin: 16,
-    marginBottom: 32,
-    borderRadius: 12,
-    elevation: 3,
+    paddingVertical: SPACING.lg + 2,
+    borderRadius: RADIUS.lg,
+    elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
   },
   startButtonText: {
     fontSize: 18,
@@ -1005,26 +1167,27 @@ const styles = StyleSheet.create({
   },
   activeContainer: {
     flex: 1,
-    padding: 16,
-    minHeight: height * 0.8,
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    paddingTop: SPACING.lg,
+    minHeight: height * 0.75,
   },
   animationContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: height * 0.4,
+    height: height * 0.38,
   },
   breathingCircle: {
-    width: width * 0.6,
-    height: width * 0.6,
-    borderRadius: width * 0.3,
+    width: width * 0.58,
+    height: width * 0.58,
+    borderRadius: (width * 0.58) / 2,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 8,
+    elevation: 6,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    marginTop: 50
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    marginTop: SPACING.xl,
   },
   phaseLabelActive: {
     fontSize: 24,
@@ -1045,22 +1208,22 @@ const styles = StyleSheet.create({
   },
   phaseIndicators: {
     flexDirection: 'row',
-    marginTop: 30,
+    justifyContent: 'center',
+    marginTop: SPACING.xxl,
   },
   phaseDot: {
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#E5E7EB',
-    marginHorizontal: 4,
-    marginVertical:20
+    backgroundColor: COLORS.border,
+    marginHorizontal: SPACING.xs,
   },
   phaseDotActive: {
-    transform: [{ scale: 1.5 }],
+    transform: [{ scale: 1.4 }],
   },
   instructionCard: {
-    marginTop: 50,
-    padding: 20,
+    marginTop: SPACING.xxl,
+    padding: LAYOUT.cardPadding,
     alignItems: 'center',
   },
   instructionTitle: {
@@ -1079,15 +1242,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 30,
-    paddingHorizontal: 20,
+    marginTop: SPACING.xxl,
+    paddingHorizontal: 0,
   },
   soundControl: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: '#F3F4F6',
+    padding: SPACING.md,
+    borderRadius: RADIUS.md,
+    backgroundColor: COLORS.surfaceVariant,
     position: 'relative',
   },
   soundPlayingIndicator: {
@@ -1097,14 +1260,16 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#4CAF50',
+    backgroundColor: COLORS.success,
   },
   stopButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: '#FEE2E2',
+    padding: SPACING.md,
+    borderRadius: RADIUS.md,
+    backgroundColor: COLORS.surfaceVariant,
+    borderWidth: 1,
+    borderColor: COLORS.error,
   },
   stopButtonText: {
     fontSize: 16,
@@ -1135,7 +1300,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   soundMenuItemSelected: {
-    backgroundColor: '#F0F9FF',
+    backgroundColor: COLORS.primaryLight + '40',
   },
   soundMenuLabel: {
     fontSize: 14,
@@ -1144,12 +1309,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   progressContainer: {
-    marginTop: 30,
-    paddingHorizontal: 20,
+    marginTop: SPACING.xxl,
+    paddingHorizontal: 0,
   },
   progressBar: {
     height: 6,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: COLORS.border,
     borderRadius: 3,
     overflow: 'hidden',
   },
@@ -1169,7 +1334,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20,
     padding: 8,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: COLORS.surfaceVariant,
     borderRadius: 16,
   },
   soundStatusText: {

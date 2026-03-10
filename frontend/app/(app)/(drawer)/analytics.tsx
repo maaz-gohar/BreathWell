@@ -10,7 +10,7 @@ import {
 import AppScreenHeader from '../../../components/ui/AppScreenHeader';
 import Card from '../../../components/ui/Card';
 import { COLORS } from '../../../constants/Colors';
-import { RADIUS, SPACING, TYPOGRAPHY } from '../../../constants/theme';
+import { LAYOUT, RADIUS, SPACING, TYPOGRAPHY } from '../../../constants/theme';
 import { moodService } from '../../../services/mood.service';
 
 interface MoodAnalytics {
@@ -187,17 +187,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.text,
     marginBottom: 8,
     marginTop: 30
   },
   subtitle: {
     fontSize: 16,
-    color: '#FFFFFF',
-    opacity: 0.9
+    color: COLORS.textLight,
   },
   section: {
-    padding: 20
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    paddingTop: LAYOUT.sectionSpacingVertical,
   },
   sectionTitle: {
     fontSize: 18,
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   barContainer: {
     flex: 1,
     height: 20,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: COLORS.border,
     borderRadius: 10,
     overflow: 'hidden',
     marginHorizontal: 12

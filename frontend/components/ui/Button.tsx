@@ -35,7 +35,7 @@ export default function Button({
   const getVariantStyles = () => {
     switch (variant) {
       case 'secondary':
-        return { backgroundColor: COLORS.secondary };
+        return { backgroundColor: COLORS.primaryLight };
       case 'outline':
         return {
           backgroundColor: 'transparent',
@@ -64,6 +64,8 @@ export default function Button({
     switch (variant) {
       case 'outline':
         return { color: COLORS.primary };
+      case 'secondary':
+        return { color: COLORS.text };
       default:
         return { color: '#FFFFFF' };
     }

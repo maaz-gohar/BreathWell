@@ -19,7 +19,7 @@ interface CardProps extends TouchableOpacityProps {
 export default function Card({
   children,
   style,
-  elevation = 2,
+  elevation = 1,
   borderRadius = 16,
   backgroundColor = COLORS.card,
   ...props
@@ -28,9 +28,9 @@ export default function Card({
     backgroundColor,
     borderRadius,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: elevation / 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: elevation,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
     elevation,
   };
 

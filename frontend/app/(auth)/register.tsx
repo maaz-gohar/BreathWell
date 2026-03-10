@@ -1,4 +1,3 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -67,10 +66,7 @@ export default function RegisterScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={[COLORS.primary, COLORS.primaryLight]}
-      style={styles.gradient}
-    >
+    <View style={styles.wrapper}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
@@ -137,13 +133,14 @@ export default function RegisterScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  gradient: {
+  wrapper: {
     flex: 1,
+    backgroundColor: COLORS.background,
   },
   container: {
     flex: 1,
@@ -160,26 +157,22 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: '#FFFFFF',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 10,
+    color: COLORS.text,
   },
   subtitle: {
     fontSize: 16,
-    color: '#FFFFFF',
+    color: COLORS.textLight,
     marginTop: 10,
-    opacity: 0.9,
   },
   formContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.surface,
     borderRadius: 20,
     padding: 30,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.1,
-    shadowRadius: 20,
-    elevation: 10,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 2,
   },
   registerButton: {
     marginTop: 10,
@@ -191,7 +184,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingTop: 20,
     borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
+    borderTopColor: COLORS.border,
   },
   footerText: {
     color: COLORS.textLight,

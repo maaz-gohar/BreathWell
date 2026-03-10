@@ -1,6 +1,14 @@
 /**
- * BreathWell design system: spacing, radius, and typography tokens.
+ * BreathWell design system: spacing, radius, typography, and layout tokens.
  */
+
+/** Horizontal padding for screen content (edges). Use for sections and full-width elements. */
+export const LAYOUT = {
+  screenPaddingHorizontal: 20,
+  sectionSpacingVertical: 24,
+  gridGap: 12,
+  cardPadding: 20,
+} as const;
 
 export const SPACING = {
   xs: 4,

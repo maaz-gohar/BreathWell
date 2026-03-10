@@ -15,6 +15,7 @@ import AppScreenHeader from '../../../components/ui/AppScreenHeader';
 import Card from '../../../components/ui/Card';
 import Loading from '../../../components/ui/Loading';
 import { COLORS } from '../../../constants/Colors';
+import { LAYOUT } from '../../../constants/theme';
 import { useAuth } from '../../../context/AuthContext';
 import { journalService } from '../../../services/journal.service';
 
@@ -328,23 +329,23 @@ export default function JournalScreen() {
   };
 
   const getSentimentColor = (sentiment: string | undefined): string => {
-    if (!sentiment) return '#666';
+    if (!sentiment) return COLORS.textLight;
     const colors = {
-      positive: '#4CAF50',
-      negative: '#F44336',
-      neutral: '#FFC107',
+      positive: COLORS.success,
+      negative: COLORS.error,
+      neutral: COLORS.primary,
     };
-    return colors[sentiment as keyof typeof colors] || '#666';
+    return colors[sentiment as keyof typeof colors] || COLORS.textLight;
   };
 
   const getSentimentBackgroundColor = (sentiment: string | undefined): string => {
-    if (!sentiment) return '#F5F5F5';
+    if (!sentiment) return COLORS.surfaceVariant;
     const colors = {
-      positive: '#E8F5E8',
-      negative: '#FFEBEE',
-      neutral: '#FFF8E1',
+      positive: COLORS.primaryLight,
+      negative: COLORS.surfaceVariant,
+      neutral: COLORS.primaryLight,
     };
-    return colors[sentiment as keyof typeof colors] || '#F5F5F5';
+    return colors[sentiment as keyof typeof colors] || COLORS.surfaceVariant;
   };
 
   if (loading) {
@@ -497,18 +498,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.text,
     marginBottom: 8,
     marginTop: 30
   },
   subtitle: {
     fontSize: 16,
-    color: '#FFFFFF',
-    opacity: 0.9,
+    color: COLORS.textLight,
   },
   recorderCard: {
-    margin: 16,
-    marginTop: 20,
+    marginHorizontal: LAYOUT.screenPaddingHorizontal,
+    marginTop: LAYOUT.sectionSpacingVertical,
   },
   recorderHeader: {
     flexDirection: 'row',
@@ -539,7 +539,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   section: {
-    padding: 16,
+    paddingHorizontal: LAYOUT.screenPaddingHorizontal,
+    paddingTop: LAYOUT.sectionSpacingVertical,
+    paddingBottom: 16,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -555,7 +557,7 @@ const styles = StyleSheet.create({
   sectionCount: {
     fontSize: 14,
     color: COLORS.textLight,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: COLORS.border,
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: 12,
@@ -578,9 +580,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   journalCard: {
-    marginBottom: 16,
-    padding: 16,
-    backgroundColor: '#FFFFFF',
+    marginBottom: LAYOUT.gridGap,
+    padding: LAYOUT.cardPadding,
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

@@ -177,7 +177,7 @@ export default function ProfileScreen() {
             onPress={pickImage}
             disabled={loading}
           >
-            <Ionicons name="camera" size={20} color="#FFFFFF" />
+            <Ionicons name="camera" size={20} color={COLORS.text} />
           </TouchableOpacity>
         </View>
         
@@ -185,7 +185,7 @@ export default function ProfileScreen() {
         <Text style={styles.userEmail}>{user.email || 'No email'}</Text>
         
         <View style={styles.memberSince}>
-          <Ionicons name="calendar" size={16} color="#FFFFFF" />
+          <Ionicons name="calendar" size={16} color={COLORS.textLight} />
           <Text style={styles.memberSinceText}>
             {user.createdAt 
               ? `Member since ${Formatters.date(user.createdAt)}`
@@ -342,9 +342,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: SPACING.xxxl,
     paddingTop: SPACING.xxxl + 28,
-    backgroundColor: COLORS.primary,
-    borderBottomLeftRadius: RADIUS.xl + 4,
-    borderBottomRightRadius: RADIUS.xl + 4,
+    backgroundColor: COLORS.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.borderLight,
   },
   avatarContainer: {
     position: 'relative',
@@ -355,8 +355,8 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     borderWidth: 4,
-    borderColor: '#FFFFFF',
-    backgroundColor: '#FFFFFF',
+    borderColor: COLORS.border,
+    backgroundColor: COLORS.surface,
   },
   avatarEditButton: {
     position: 'absolute',
@@ -369,18 +369,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: '#FFFFFF',
+    borderColor: COLORS.border,
   },
   userName: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.text,
     marginBottom: 4,
   },
   userEmail: {
     fontSize: 16,
-    color: '#FFFFFF',
-    opacity: 0.9,
+    color: COLORS.textLight,
     marginBottom: 12,
   },
   memberSince: {
@@ -389,8 +388,7 @@ const styles = StyleSheet.create({
   },
   memberSinceText: {
     fontSize: 14,
-    color: '#FFFFFF',
-    opacity: 0.8,
+    color: COLORS.textLight,
     marginLeft: 6,
   },
   statsCard: {
@@ -447,7 +445,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   saveText: {
-    color: '#FFFFFF',
+    color: COLORS.text,
     fontWeight: '600',
   },
   infoRow: {
@@ -456,7 +454,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomColor: COLORS.borderLight,
   },
   infoLabel: {
     fontSize: 14,
@@ -477,7 +475,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomColor: COLORS.borderLight,
   },
   settingText: {
     flex: 1,

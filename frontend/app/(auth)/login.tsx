@@ -1,4 +1,3 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -44,10 +43,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={[COLORS.primary, COLORS.primaryLight]}
-      style={styles.gradient}
-    >
+    <View style={styles.wrapper}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
@@ -66,7 +62,7 @@ export default function LoginScreen() {
               <TextInput
                 style={styles.input}
                 placeholder="Enter your email"
-                placeholderTextColor="#999"
+                placeholderTextColor={COLORS.textSecondary}
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
@@ -79,7 +75,7 @@ export default function LoginScreen() {
               <TextInput
                 style={styles.input}
                 placeholder="Enter your password"
-                placeholderTextColor="#999"
+                placeholderTextColor={COLORS.textSecondary}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
@@ -105,13 +101,14 @@ export default function LoginScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  gradient: {
+  wrapper: {
     flex: 1,
+    backgroundColor: COLORS.background,
   },
   container: {
     flex: 1,
@@ -128,14 +125,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: 'bold',
-    color: '#fff',
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 6,
+    color: COLORS.text,
   },
   subtitle: {
     ...TYPOGRAPHY.body,
-    color: '#fff',
+    color: COLORS.textLight,
     marginTop: SPACING.sm,
     textAlign: 'center',
   },
@@ -144,10 +138,10 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.xl,
     padding: SPACING.xxl,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 16,
-    elevation: 8,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 2,
   },
   formTitle: {
     ...TYPOGRAPHY.heading2,
@@ -182,7 +176,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
   },

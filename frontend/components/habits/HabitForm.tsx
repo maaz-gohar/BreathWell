@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.text,
   },
   content: {
     flex: 1,
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 20,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: COLORS.surfaceVariant,
     marginRight: 8,
   },
   categoryButtonActive: {
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   categoryTextActive: {
-    color: '#FFFFFF',
+    color: COLORS.text,
   },
   frequencyContainer: {
     flexDirection: 'row',
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     borderRadius: 12,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: COLORS.surfaceVariant,
     alignItems: 'center',
     marginHorizontal: 4,
   },
@@ -234,14 +234,14 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   frequencyTextActive: {
-    color: '#FFFFFF',
+    color: COLORS.text,
   },
   footer: {
     flexDirection: 'row',
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    borderTopColor: COLORS.border,
+    backgroundColor: COLORS.surface,
   },
   cancelButton: {
     flex: 1,

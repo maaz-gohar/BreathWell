@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   innerCircle: {
     borderRadius: 100,
     borderWidth: 2,
-    borderColor: '#FFFFFF',
+    borderColor: COLORS.surface,
     opacity: 0.3,
   },
 });

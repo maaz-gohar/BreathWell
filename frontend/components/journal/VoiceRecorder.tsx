@@ -306,7 +306,7 @@ const getRecordingColor = (status: string) => {
   switch (status) {
     case 'preparing': return COLORS.warning || '#FFA500';
     case 'recording': return COLORS.error || '#FF0000';
-    case 'stopping': return COLORS.textLight || '#999';
+    case 'stopping': return COLORS.textLight;
     default: return COLORS.primary || '#007AFF';
   }
 };
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: COLORS.surfaceVariant,
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 3,
@@ -343,10 +343,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEE2E2',
   },
   preparingButton: {
-    backgroundColor: '#FFF3CD',
+    backgroundColor: COLORS.primaryLight,
   },
   stoppingButton: {
-    backgroundColor: '#E5E7EB',
+    backgroundColor: COLORS.border,
   },
   infoContainer: {
     alignItems: 'center',

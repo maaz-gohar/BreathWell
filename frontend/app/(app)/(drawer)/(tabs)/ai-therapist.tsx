@@ -310,18 +310,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: "#ffffff",
     marginBottom: 4,
     paddingTop: 5
   },
   subtitle: {
     fontSize: 16,
-    color: '#FFFFFF',
-    opacity: 0.9,
+    color: "#ffffff",
   },
   chatCard: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.surface,
     margin: 16,
     borderRadius: 20,
     overflow: 'hidden',
@@ -420,12 +419,12 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 4,
   },
   aiBubble: {
-    backgroundColor: '#F3F4F6',
+    backgroundColor: COLORS.surfaceVariant,
     borderBottomLeftRadius: 4,
   },
   userMessageText: {
     fontSize: 16,
-    color: '#FFFFFF',
+    color: COLORS.text,
     marginBottom: 4,
   },
   aiMessageText: {
@@ -435,7 +434,7 @@ const styles = StyleSheet.create({
   },
   userMessageTime: {
     fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: COLORS.textLight,
     textAlign: 'right',
   },
   aiMessageTime: {
@@ -448,12 +447,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    borderTopColor: COLORS.border,
+    backgroundColor: COLORS.surface,
   },
   input: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: COLORS.surfaceVariant,
     borderRadius: 24,
     paddingHorizontal: 16,
     paddingVertical: Platform.OS === 'ios' ? 12 : 8,
@@ -461,14 +460,14 @@ const styles = StyleSheet.create({
     maxHeight: 100,
     marginRight: 12,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: COLORS.border,
     color: COLORS.text,
   },
   sendButton: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: COLORS.surfaceVariant,
     justifyContent: 'center',
     alignItems: 'center',
   },
