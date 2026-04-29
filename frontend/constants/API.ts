@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: 'http://192.168.1.12:8000/api', // Change to your local IP
+  BASE_URL: 'http://192.168.1.5:8000/api', // Change to your local IP
   TIMEOUT: 30000,
   ENDPOINTS: {
     AUTH: {
