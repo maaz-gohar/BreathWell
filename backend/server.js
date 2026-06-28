@@ -12,6 +12,9 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 // Serve static files
 app.use('/audio', express.static(path.join(__dirname, 'uploads/audio')));
 app.use('/avatars', express.static(path.join(__dirname, 'uploads/avatars')));
@@ -26,15 +29,18 @@ app.use('/api/journal', require('./routes/journal.route'));
 app.use('/api/islamic', require('./routes/islamic.route'));
 app.use('/api/places', require('./routes/places.route'));
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mental_wellness', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+console.log("Mongo URI:", process.env.MONGODB_URI);
 
-mongoose.connection.on('connected', () => {
-  console.log('Connected to MongoDB');
-});
+// Database connection
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log("✅ Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB Connection Error:");
+    console.error(err);
+  });
 
 // Error handling middleware
 app.use((error, req, res, next) => {
