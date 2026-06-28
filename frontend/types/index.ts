@@ -1,3 +1,20 @@
+export interface LocationCoords {
+  latitude: number;
+  longitude: number;
+  accuracy?: number;
+}
+
+export interface NearbyPlace {
+  id: string;
+  name: string;
+  type: string;
+  latitude: number;
+  longitude: number;
+  address: string | null;
+  distanceKm: number;
+  distanceFormatted: string;
+}
+
 export interface User {
   _id: string;
   name: string;

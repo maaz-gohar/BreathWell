@@ -9,7 +9,10 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "BreathWell uses your location to find nearby mosques when you ask in chat."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -22,7 +25,9 @@
       "predictiveBackGestureEnabled": false,
       "permissions": [
         "android.permission.RECORD_AUDIO",
-        "android.permission.MODIFY_AUDIO_SETTINGS"
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION"
       ],
       "package": "com.muhammad_maaz.frontend"
     },
@@ -45,7 +50,13 @@
         }
       ],
       "expo-secure-store",
-      "expo-audio"
+      "expo-audio",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "BreathWell uses your location to find nearby mosques when you ask in chat."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

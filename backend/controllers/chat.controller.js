@@ -6,6 +6,12 @@ const {
   ISLAMIC_THERAPIST_SYSTEM_PROMPT,
   ISLAMIC_FALLBACK_RESPONSES,
 } = require('../config/islamic-therapist-prompt');
+const { isNearMeQuery } = require('../utils/nearMeDetection');
+const { isValidCoordinates } = require('../utils/geo');
+const {
+  findNearbyPlaces,
+  buildPlacesContext,
+} = require('../services/overpass.service');
 
 const groqApiKey = process.env.GROQ_API_KEY;
 
@@ -25,6 +31,33 @@ const EMOTION_KEYWORDS = {
   guilt: ['guilty', 'guilt', 'regret', 'ashamed', 'sin', 'wrong'],
   spiritual_exhaustion: ['exhausted', 'tired', 'drained', 'spiritually empty', 'no iman'],
 };
+
+/**
+ * Build location context for near-me queries.
+ */
+async function getLocationContextForMessage(message, latitude, longitude) {
+  const { isNearMe, placeType } = isNearMeQuery(message);
+
+  if (!isNearMe) {
+    return '';
+  }
+
+  if (!isValidCoordinates(latitude, longitude)) {
+    return '\n\nThe user is asking about nearby places but location is not available. Politely ask them to enable location permissions in their device settings so you can find places near them.';
+  }
+
+  try {
+    const places = await findNearbyPlaces({
+      lat: latitude,
+      lng: longitude,
+      type: placeType || 'mosque',
+    });
+    return buildPlacesContext(places, placeType || 'mosque');
+  } catch (err) {
+    console.error('Overpass API error:', err);
+    return '\n\nThe user asked about nearby places but the place search service failed. Apologize briefly and ask them to try again in a moment.';
+  }
+}
 
 /**
  * Load Islamic modules and find context matching the user message.
@@ -100,8 +133,11 @@ const analyzeSentiment = (text) => {
 
 exports.sendMessage = async (req, res) => {
   try {
-    const { sessionId, message } = req.body;
+    const { sessionId, message, latitude, longitude } = req.body;
     const userId = req.userId;
+
+    const lat = typeof latitude === 'number' ? latitude : parseFloat(latitude);
+    const lng = typeof longitude === 'number' ? longitude : parseFloat(longitude);
 
     let chatSession;
 
@@ -127,8 +163,9 @@ exports.sendMessage = async (req, res) => {
     chatSession.messages.push(userMessage);
 
     const islamicContext = getIslamicContextForMessage(message);
+    const locationContext = await getLocationContextForMessage(message, lat, lng);
     const systemContent =
-      ISLAMIC_THERAPIST_SYSTEM_PROMPT + islamicContext;
+      ISLAMIC_THERAPIST_SYSTEM_PROMPT + islamicContext + locationContext;
 
     let aiResponse =
       "I'm here to listen and support you with an Islamic perspective. How are you feeling today?";

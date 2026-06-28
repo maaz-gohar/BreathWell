@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: 'http://192.168.1.5:8000/api', // Change to your local IP
+  BASE_URL: 'http://192.168.1.8:8000/api', // Change to your local IP
   TIMEOUT: 30000,
   ENDPOINTS: {
     AUTH: {
@@ -41,6 +41,9 @@ export const API_CONFIG = {
       MORNING_ADHKAR: '/islamic/sleep/morning-adhkar',
       TAHAJJUD: '/islamic/sleep/tahajjud',
       RUQYAH: '/islamic/ruqyah'
+    },
+    PLACES: {
+      NEARBY: '/places/nearby'
     }
   }
 };

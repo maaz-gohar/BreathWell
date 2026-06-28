@@ -17,6 +17,7 @@ import Loading from '../../../../components/ui/Loading';
 import { COLORS } from '../../../../constants/Colors';
 import { SPACING } from '../../../../constants/theme';
 import { useAuth } from '../../../../context/AuthContext';
+import { useLocation } from '../../../../context/LocationContext';
 import { chatService } from '../../../../services/chat.service';
 import { Formatters } from '../../../../utils/formatters';
 
@@ -32,6 +33,7 @@ interface Message {
 export default function AiTherapistScreen() {
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
+  const { latitude, longitude, hasLocation, error: locationError } = useLocation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(false);
@@ -93,10 +95,12 @@ export default function AiTherapistScreen() {
   const sendMessage = async () => {
     if (!inputText.trim()) return;
 
+    const messageText = inputText.trim();
+
     const userMessage: Message = {
       _id: Date.now().toString(),
       user: user?._id || '',
-      message: inputText,
+      message: messageText,
       createdAt: new Date().toISOString(),
       isUser: true,
     };
@@ -106,20 +110,24 @@ export default function AiTherapistScreen() {
     setLoading(true);
 
     try {
-      console.log('Sending message:', { 
-        message: inputText, 
-        // sessionId: activeSession,
-        userId: user?._id 
+      const location =
+        hasLocation && latitude != null && longitude != null
+          ? { latitude, longitude }
+          : undefined;
+
+      console.log('Sending message:', {
+        message: messageText,
+        userId: user?._id,
+        location,
       });
-      
-      // Send message without session (create new session automatically)
-      const response = await chatService.sendMessage(inputText, undefined);
+
+      const response = await chatService.sendMessage(messageText, undefined, location);
       console.log('Received response:', response);
-      
+
       const aiMessage: Message = {
         _id: response._id,
         user: 'ai',
-        message: inputText,
+        message: messageText,
         response: response.response,
         createdAt: response.createdAt,
         isUser: false,
@@ -198,6 +206,20 @@ export default function AiTherapistScreen() {
             <Text style={styles.disclaimer}>
               Guidance is based on Islamic principles. For serious concerns, consult a professional and a qualified scholar.
             </Text>
+            <View style={styles.locationStatus}>
+              <Ionicons
+                name={hasLocation ? 'location' : 'location-outline'}
+                size={14}
+                color={hasLocation ? COLORS.success : COLORS.warning}
+              />
+              <Text style={[styles.locationStatusText, hasLocation ? styles.locationActive : styles.locationInactive]}>
+                {hasLocation
+                  ? 'Location active — nearby searches enabled'
+                  : locationError
+                    ? 'Location unavailable — enable permissions for nearby searches'
+                    : 'Waiting for location...'}
+              </Text>
+            </View>
           </View>
         </View>
 
@@ -359,6 +381,22 @@ const styles = StyleSheet.create({
     color: COLORS.textLight,
     fontStyle: 'italic',
     marginTop: 8,
+  },
+  locationStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8,
+    gap: 4,
+  },
+  locationStatusText: {
+    fontSize: 11,
+    flex: 1,
+  },
+  locationActive: {
+    color: COLORS.success,
+  },
+  locationInactive: {
+    color: COLORS.warning,
   },
   chatArea: {
     flex: 1,

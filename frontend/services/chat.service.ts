@@ -32,13 +32,28 @@ interface SessionsBackendResponse {
   updatedAt?: string;
 }
 
+interface SendMessageOptions {
+  sessionId?: string;
+  latitude?: number;
+  longitude?: number;
+}
+
 export const chatService = {
-  async sendMessage(message: string, sessionId?: string): Promise<ChatMessage> {
+  async sendMessage(
+    message: string,
+    sessionId?: string,
+    location?: { latitude: number; longitude: number }
+  ): Promise<ChatMessage> {
     try {
-      console.log('Sending message to backend:', { message, sessionId });
+      console.log('Sending message to backend:', { message, sessionId, location });
+      const body: SendMessageOptions & { message: string } = { message, sessionId };
+      if (location) {
+        body.latitude = location.latitude;
+        body.longitude = location.longitude;
+      }
       const response = await api.post<ChatBackendResponse>(
         API_CONFIG.ENDPOINTS.CHAT.MESSAGE, 
-        { message, sessionId }
+        body
       );
       
       console.log('Backend response:', response.data);
