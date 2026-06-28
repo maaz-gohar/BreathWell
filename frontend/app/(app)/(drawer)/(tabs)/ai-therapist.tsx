@@ -206,7 +206,7 @@ export default function AiTherapistScreen() {
             <Text style={styles.disclaimer}>
               Guidance is based on Islamic principles. For serious concerns, consult a professional and a qualified scholar.
             </Text>
-            <View style={styles.locationStatus}>
+            {/* <View style={styles.locationStatus}>
               <Ionicons
                 name={hasLocation ? 'location' : 'location-outline'}
                 size={14}
@@ -219,7 +219,7 @@ export default function AiTherapistScreen() {
                     ? 'Location unavailable — enable permissions for nearby searches'
                     : 'Waiting for location...'}
               </Text>
-            </View>
+            </View> */}
           </View>
         </View>
 
