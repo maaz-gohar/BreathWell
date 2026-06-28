@@ -1,4 +1,4 @@
-const Journal = require('../models/Journal');
+const Journal = require('../models/journal');
 const mongoose = require('mongoose');
 const axios = require('axios');
 const fs = require('fs');
